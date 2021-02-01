@@ -3,6 +3,16 @@ Manage order calculations based on invoices, refunds, cancellations
 
 See full documentation [on GitHub](https://github.com/chantelle-lingerie/sales)
 
+Tests: 100% coverage
+
+[![~Build Status](https://travis-ci.com/chantelle-lingerie/sales.svg?branch=master)](https://travis-ci.com/chantelle-lingerie/sales)
+
+## Installation
+
+npm: `npm i @chantelle/sales`
+
+yarn: `yarn add @chantelle/sales`
+
 ## Interfaces
 
 ### Item
