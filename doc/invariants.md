@@ -84,7 +84,7 @@ use `order.sales` from the [order API](./order.md)
 ### Read more
 - [README home](../readme.md)
 - [Order model](./sales.pdf)
-- [Business scenarios](./doc/sales/business-scenarios.pdf)
+- [Business scenarios](./sales/business-scenarios.pdf)
 - [Basics](./basics.md) (low-order functions)
 - [Documents](./documents.md)
 - [Cart](./cart.md)

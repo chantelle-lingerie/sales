@@ -54,7 +54,7 @@ This function allows you to do the same, but:
 ### Read more
 - [README home](../readme.md)
 - [Order model](./sales.pdf)
-- [Business scenarios](./doc/sales/business-scenarios.pdf)
+- [Business scenarios](./sales/business-scenarios.pdf)
 - [Basics](./basics.md) (low-order functions)
 - [Invariants](./invariants.md)
 - [Cart](./cart.md)

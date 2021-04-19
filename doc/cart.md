@@ -51,7 +51,7 @@ So, with the `orderCart` initialized by the order, we have 3 functions easy to u
 ### Read more
 - [README home](../readme.md)
 - [Order model](./sales.pdf)
-- [Business scenarios](./doc/sales/business-scenarios.pdf)
+- [Business scenarios](./sales/business-scenarios.pdf)
 - [Basics](./basics.md) (low-order functions)
 - [Documents](./documents.md)
 - [Invariants](./invariants.md)
