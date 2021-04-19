@@ -124,11 +124,12 @@ the document of `invoice`, `refund`, or `cancellation`.
 
 See examples in the tests.
 Take into account, that `sales` tests do not increase the code coverage -
-they just prove the business cases for custom cart calculations.
+they just prove the [business cases](./doc/sales/business-scenarios.pdf) for custom cart calculations.
 
 ### Read more
 - [README home](../readme.md)
 - [Order model](./sales.pdf)
+- [Business scenarios](./doc/sales/business-scenarios.pdf)
 - [Basics](./basics.md) (low-order functions)
 - [Documents](./documents.md)
 - [Invariants](./invariants.md)
