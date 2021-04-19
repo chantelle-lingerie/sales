@@ -20,8 +20,9 @@ In every sales document we need the right amounts: shipping, total, price for ea
 
 Many implementations [have](https://community.shopify.com/c/Shopify-Design/Problem-with-rounding-prices/td-p/416162) [rounding](https://magento.stackexchange.com/questions/225168/magento1-9-paypal-rounding-amount-issue) [issues](https://github.com/woocommerce/woocommerce/issues/14458) on calculations and do not give flexibility to cancel promotions.
 
-Introducing the [Order model](./doc/sales.pdf) this library is designed to cover [business cases](./doc/sales/business-scenarios.pdf) with promotions cancelation in sales documents.
-Enjoy using it without having any rounding issues :tada:
+By introducing the [Order model](./doc/sales.pdf) this library covers [business cases](./doc/sales/business-scenarios.pdf) with promotions cancelation in sales documents.
+
+Enjoy using it without having any number rounding issues :tada:
 
 ## Interfaces
 
