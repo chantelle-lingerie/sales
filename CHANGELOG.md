@@ -1,6 +1,7 @@
 1.1.4
 =============
 * Documentation for business scenarios
+* Update jest
 
 1.1.3
 =============

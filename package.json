@@ -17,8 +17,8 @@
     "@types/node": "^12.7.3",
     "copyfiles": "^2.4.0",
     "del-cli": "^3.0.0",
-    "jest": "^24.9.0",
-    "ts-jest": "^24.0.2",
+    "jest": "^26.0.0",
+    "ts-jest": "^26.0.0",
     "typescript": "^3.6.3"
   },
   "files": [
