@@ -105,7 +105,7 @@ For all documented functions you can also check the unit-tests to see the usage 
 All interfaces are extendable in functions, so you can use more specific types in your applications.
 
 - [Order model](./doc/sales.pdf)
-- [Business scenarios](./doc/sales/business-scenarios.pdf)
+- [Business scenarios](./doc/sales/business.md)
 - [Basics](./doc/basics.md) (low-order functions)
 - [Documents](./doc/documents.md)
 - [Invariants](./doc/invariants.md)
