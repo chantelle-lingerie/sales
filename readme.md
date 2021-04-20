@@ -13,6 +13,17 @@ npm: `npm i @chantelle/sales`
 
 yarn: `yarn add @chantelle/sales`
 
+## Motivation
+
+Most of e-commerce platforms need to deal with the order management: creating invoices, cancelations, refunds.
+In every sales document we need the right amounts: shipping, total, price for each item.
+
+Many implementations [have](https://community.shopify.com/c/Shopify-Design/Problem-with-rounding-prices/td-p/416162) [rounding](https://magento.stackexchange.com/questions/225168/magento1-9-paypal-rounding-amount-issue) [issues](https://github.com/woocommerce/woocommerce/issues/14458) on calculations and do not give flexibility to cancel promotions.
+
+By introducing the [Order model](./doc/sales.pdf) this library covers [business cases](./doc/sales/business-scenarios.pdf) with promotions cancelation in sales documents.
+
+Enjoy using it without having any number rounding issues :tada:
+
 ## Interfaces
 
 ### Item
@@ -94,6 +105,7 @@ For all documented functions you can also check the unit-tests to see the usage 
 All interfaces are extendable in functions, so you can use more specific types in your applications.
 
 - [Order model](./doc/sales.pdf)
+- [Business scenarios](./doc/sales/business-scenarios.pdf)
 - [Basics](./doc/basics.md) (low-order functions)
 - [Documents](./doc/documents.md)
 - [Invariants](./doc/invariants.md)

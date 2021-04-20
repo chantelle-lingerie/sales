@@ -145,6 +145,7 @@ This is the highest-order function in Basics.
 ### Read more
 - [README home](../readme.md)
 - [Order model](./sales.pdf)
+- [Business scenarios](./sales/business-scenarios.pdf)
 - [Documents](./documents.md)
 - [Invariants](./invariants.md)
 - [Cart](./cart.md)
