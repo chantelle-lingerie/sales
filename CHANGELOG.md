@@ -1,3 +1,7 @@
+1.1.5
+=============
+* Resolve #5: Re-write business cases to markdown
+
 1.1.4
 =============
 * Documentation for business scenarios

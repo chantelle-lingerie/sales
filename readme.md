@@ -20,7 +20,7 @@ In every sales document we need the right amounts: shipping, total, price for ea
 
 Many implementations [have](https://community.shopify.com/c/Shopify-Design/Problem-with-rounding-prices/td-p/416162) [rounding](https://magento.stackexchange.com/questions/225168/magento1-9-paypal-rounding-amount-issue) [issues](https://github.com/woocommerce/woocommerce/issues/14458) on calculations and do not give flexibility to cancel promotions.
 
-By introducing the [Order model](./doc/sales.pdf) this library covers [business cases](./doc/sales/business-scenarios.pdf) with promotions cancelation in sales documents.
+By introducing the [Order model](./doc/sales.pdf) this library covers [business cases](./doc/sales/business.md) with promotions cancelation in sales documents.
 
 Enjoy using it without having any number rounding issues :tada:
 
@@ -105,7 +105,7 @@ For all documented functions you can also check the unit-tests to see the usage 
 All interfaces are extendable in functions, so you can use more specific types in your applications.
 
 - [Order model](./doc/sales.pdf)
-- [Business scenarios](./doc/sales/business-scenarios.pdf)
+- [Business scenarios](./doc/sales/business.md)
 - [Basics](./doc/basics.md) (low-order functions)
 - [Documents](./doc/documents.md)
 - [Invariants](./doc/invariants.md)
