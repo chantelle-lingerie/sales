@@ -3,7 +3,9 @@ Manage order calculations based on invoices, refunds, cancellations
 
 See full documentation [on GitHub](https://github.com/chantelle-lingerie/sales)
 
-Tests: 100% coverage
+* zero production dependencies (only dev dependencies)
+* fully immutable calculations (pure functions)
+* 100% unit-tests coverage
 
 [![~Build Status](https://travis-ci.com/chantelle-lingerie/sales.svg?branch=master)](https://travis-ci.com/chantelle-lingerie/sales)
 

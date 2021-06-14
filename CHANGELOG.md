@@ -1,3 +1,8 @@
+1.1.6
+=============
+* Security fixes in dev dependencies
+* Documentation: list main advantages
+
 1.1.5
 =============
 * Resolve #5: Re-write business cases to markdown
