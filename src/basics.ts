@@ -1,35 +1,35 @@
-import { Total, Qty, Items, Price, Item, ItemQty } from './interfaces'
+import { TotalRO, QtyRO, PriceRO, ItemRO, ItemQtyRO, ItemsRO } from './readonlyInterfaces'
 import { documents } from './documents'
 
 export const addPrices = (...prices: number[]) => prices.reduce((result, price) => numberToPrice_(result + price), 0)
 export const minusPrice = (a: number, b: number) => Number.parseFloat((a - b).toFixed(2))
-export const itemPrice = <T extends Qty & Price>({ price, qty }: T) => numberToPrice_(qty * price)
-export const itemDiscount = <T extends Total & Qty & Price>({ total, ...item }: T) => minusPrice(itemPrice(item), total)
-export const divideTotal = <T extends Total & Qty>(item: T) => Array.from(Array(item.qty).keys())
+export const itemPrice = <T extends QtyRO & PriceRO>({ price, qty }: T) => numberToPrice_(qty * price)
+export const itemDiscount = <T extends TotalRO & QtyRO & PriceRO>({ total, ...item }: T) => minusPrice(itemPrice(item), total)
+export const divideTotal = <T extends TotalRO & QtyRO>(item: T) => Array.from(Array(item.qty).keys())
     .reduce(({ items, sum }, n) => (
         total_ => ({ items: [...items, { ...item, total: minusPrice(total_, sum), qty: 1 }], sum: total_ })
     )(numberToPrice_(item.total * (n + 1) / item.qty)), { items: [] as T[], sum: 0 }).items
 
 export const itemsReduce = <U>(id: string, init: U) =>
-    <T extends Item>(items: T[], reducer: (acc: U, item: T) => U) => items
+    <T extends ItemRO>(items: readonly T[], reducer: (acc: U, item: T) => U) => items
         .reduce((acc, item) => item.id === id ? reducer(acc, item) : acc, init)
-export const itemsGroupReduce = <U, T extends Item>(init: (item: T) => U) =>
-    (items: T[], reducer: (acc: U, item: T) => U) => Object.entries(items
+export const itemsGroupReduce = <U, T extends ItemRO>(init: (item: T) => U) =>
+    (items: readonly T[], reducer: (acc: U, item: T) => U) => Object.entries(items
         .reduce((acc, item) => acc[item.id] ? acc : { ...acc, [item.id]: init(item) }, {} as { [id: string]: U }))
         .reduce((acc, [id, init]) => [...acc, itemsReduce(id, init)(items, reducer)], [] as U[])
 export const takeItems = (cheapest: boolean) =>
-    <T extends ItemQty & Total, U extends ItemQty>(from: T[], items: U[]) => documents.items
-        .qty<U, Items<U>>([{ items }])
+    <T extends ItemQtyRO & TotalRO, U extends ItemQtyRO>(from: readonly T[], items: readonly U[]) => documents.items
+        .qty<U, ItemsRO<U>>([{ items }])
         .reduce((acc, item) => [...acc, ...takeItem(cheapest)<T, U>(from.filter(({ id }) => id === item.id), item)], [] as (U & T)[])
 
-export const enrichItem = <T extends Qty & Price & { total?: number }>(item: T): T & Total =>
+export const enrichItem = <T extends QtyRO & PriceRO & { total?: number }>(item: T) =>
     ({ ...item,
         total: typeof item.total === 'number'
             ? item.total
             : itemPrice(item) })
 
-export const minusItem = <T extends Qty & Total & Price, U extends Qty & Total>(item: U) =>
-    (from: T[]) => from.length === 1
+export const minusItem = <T extends QtyRO & TotalRO & PriceRO, U extends QtyRO & TotalRO>(item: U) =>
+    (from: readonly T[]) => from.length === 1
         ? [{...from[0], qty: from[0].qty - item.qty, total: minusPrice(from[0].total, item.total)}]
             .filter(({qty}) => qty > 0)
         : (splitted => (({ skipped, item }) =>
@@ -49,7 +49,7 @@ export const minusItem = <T extends Qty & Total & Price, U extends Qty & Total>(
         )(from.map(item => divideTotal(item)))
 
 export const takeItem = (cheapest: boolean) =>
-    <T extends Qty & Total, U extends Qty>(from: T[], item: U) => [...from]
+    <T extends QtyRO & TotalRO, U extends QtyRO>(from: readonly T[], item: U) => [...from]
         .sort((a, b) => cheapest
             ? a.total / a.qty - b.total / b.qty
             : b.total / b.qty - a.total / a.qty)
@@ -65,9 +65,9 @@ export const takeItem = (cheapest: boolean) =>
                         total: numberToPrice_(qty * item_.total / item_.qty, !cheapest) }] },
             { qty: item.qty, selected: [] } as { qty: number, selected: (U & T)[] }).selected
 
-export const spreadAdjustment = <T extends Total & Qty & Price>(
+export const spreadAdjustment = <T extends TotalRO & QtyRO & PriceRO>(
     amount: number,
-    items: T[]
+    items: readonly T[]
 ) => amount == 0 || items.length === 0
     ? { amount, items, next: () => items }
     : amount < 0
@@ -115,11 +115,11 @@ export const spreadAdjustment = <T extends Total & Qty & Price>(
 const numberToPrice_ = (a: number, up = true) => up
     ? Number.parseFloat(a.toFixed(2))
     : Number.parseFloat((Math.ceil(a * 100 - .5) / 100).toFixed(2))
-const sortTotals_ = <T extends Total>(items: T[], asc = true) => [...items]
+const sortTotals_ = <T extends TotalRO>(items: readonly T[], asc = true) => [...items]
     .sort(({ total: a }, { total: b }) => asc ? minusPrice(a, b) : minusPrice(b, a))
 type Split_<T> = [T[], T[]]
-const splitItem_ = <T extends Qty & Total, U extends Qty & Total>(item: U) =>
-    (from: T[][], selected: T[] = [], skipped: T[] = []): { item: U, selected: T[], skipped: T[] } =>
+const splitItem_ = <T extends QtyRO & TotalRO, U extends QtyRO & TotalRO>(item: U) =>
+    (from: readonly (readonly T[])[], selected: readonly T[] = [], skipped: readonly T[] = []): { item: U, selected: T[], skipped: T[] } =>
         (([selected_, skipped_]) => selected_.length === 0
             ? {
                 item: { ...item, total: minusPrice(

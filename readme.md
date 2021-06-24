@@ -4,7 +4,7 @@ Manage order calculations based on invoices, refunds, cancellations
 See full documentation [on GitHub](https://github.com/chantelle-lingerie/sales)
 
 * zero production dependencies (only dev dependencies)
-* fully immutable calculations (pure functions)
+* [fully immutable calculations](#Immutability) (pure functions)
 * 100% unit-tests coverage
 
 [![~Build Status](https://travis-ci.com/chantelle-lingerie/sales.svg?branch=master)](https://travis-ci.com/chantelle-lingerie/sales)
@@ -101,6 +101,17 @@ Should be clear from the definition - just intersections (more specific types)
 `type Cart<T extends CartItem> = Items<T> & Shipping`
 
 `type CartTotals<T extends CartItem & Total> = Cart<T> & Total`
+
+### Immutability
+The library does not use the above interfaces but uses read-only (immutable) variants for each of them.
+
+For example, instead of `type Item = { id: string }`
+
+Library uses: `type ItemRO = { readonly id: string }`.
+
+The full list of immutable types could be found in [readonly interfaces](./src/readonlyInterfaces.ts).
+
+This proves the immutability of types used in the library
 
 ## Sales API
 For all documented functions you can also check the unit-tests to see the usage examples (100% coverage).
