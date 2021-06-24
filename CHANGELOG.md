@@ -1,3 +1,8 @@
+1.2.0
+=============
+* Read-only interfaces (immutable types)
+* Deep freeze all objects in tests
+
 1.1.6
 =============
 * Security fixes in dev dependencies

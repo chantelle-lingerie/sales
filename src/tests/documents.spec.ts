@@ -1,6 +1,18 @@
-import { documents as _, minusPrice, addPrices } from '../index'
+import { documents as __, minusPrice, addPrices, Total, Shipping, ItemTotal, ItemQty, Items, Price } from '../index'
+import { deepFreeze } from './deepFreeze'
 
 describe('Documents', () => {
+    const _ = {
+        total: <T extends Total>(documents: T[]) => __.total(deepFreeze(documents)),
+        shipping: <T extends Shipping>(documents: T[]) => __.shipping(deepFreeze(documents)),
+        items: {
+            total: <U extends ItemTotal, T extends Items<U>>(documents: T[]) => __.items.total(deepFreeze(documents)),
+            qty: <U extends ItemQty, T extends Items<U>>(documents: T[]) => __.items.qty(deepFreeze(documents)),
+            minus: <
+                I extends  ItemQty & Total, S extends Items<I>,
+                P extends ItemQty & Total & Price, T extends Items<P>
+            >(from: T[], subtrahend: S[]) => __.items.minus(deepFreeze(from), deepFreeze(subtrahend)) } }
+
     it('Reduce totals', () => {
         expect(_.total([{ total: .1 }, { total: .2 }]))
         .toBe(.3)

@@ -1,6 +1,35 @@
-import { Qty, Total, Price, spreadAdjustment, takeItems, itemsGroupReduce, enrichItem, addPrices, minusPrice, divideTotal, takeItem, minusItem, itemsReduce } from '../index'
+import { Qty, Total, Price, Item, ItemQty,
+    addPrices, minusPrice,
+    divideTotal as divideTotal_,
+    enrichItem as enrichItem_,
+    itemsReduce as itemsReduce_,
+    itemsGroupReduce as itemsGroupReduce_,
+    takeItem as takeItem_,
+    takeItems as takeItems_,
+    spreadAdjustment as spreadAdjustment_,
+    minusItem as minusItem_,
+} from '../index'
+import { deepFreeze } from './deepFreeze'
 
 describe('Basic functions', () => {
+
+    const divideTotal = <T extends Total & Qty>(item: T) => divideTotal_(deepFreeze(item))
+    const enrichItem = <T extends Qty & Price & { total?: number }>(item: T) => enrichItem_(deepFreeze(item))
+    const itemsReduce = <U>(id: string, init: U) =>
+        <T extends Item>(items: T[], reducer: (acc: U, item: T) => U) => itemsReduce_(id, init)(deepFreeze(items), reducer)
+    const itemsGroupReduce = <U, T extends Item>(init: (item: T) => U) =>
+        (items: T[], reducer: (acc: U, item: T) => U) => itemsGroupReduce_(init)(deepFreeze(items), reducer)
+    const takeItem = (cheapest: boolean) =>
+        <T extends Qty & Total, U extends Qty>(from: T[], item: U) => takeItem_(cheapest)(deepFreeze(from), deepFreeze(item))
+    const takeItems = (cheapest: boolean) =>
+        <T extends ItemQty & Total, U extends ItemQty>(from: T[], items: U[]) => takeItems_(cheapest)(deepFreeze(from), deepFreeze(items))
+    const spreadAdjustment = <T extends Total & Qty & Price>(
+        amount: number,
+        items: T[],
+    ) => spreadAdjustment_(amount, deepFreeze(items))
+    const minusItem = <T extends Qty & Total & Price, U extends Qty & Total>(item: U) =>
+        (from: T[]) => minusItem_(deepFreeze(item))(deepFreeze(from))
+
     describe('Prices', () => {
         it('Add', () => {
             expect(addPrices(.1, .2)).toBe(.3)

@@ -1,7 +1,27 @@
-import { Order, CartTotals, CartItem, Total, orderCart, cart as _, order as o, invariants as i } from '../index'
+import { Items, Shipping, orderCart as orderCart_, cart as __, order as o, CartItem, Cart, Total, Order, CartTotals } from '../index'
+import { invariants as i } from './freezedInvariants'
 import { order } from './order'
+import { deepFreeze } from './deepFreeze'
 
 describe('Carts', () => {
+    const _ = {
+        basic: <U extends CartItem, T extends Cart<U>>(request: T) => __.basic(deepFreeze(request)),
+        order: <
+            V extends CartItem & Total,
+            T extends Order<CartTotals<V>>,
+            S extends Cart<V>
+        >(order: T) => (request: S) => __.order(deepFreeze(order))(deepFreeze(request)) }
+    const orderCart = <
+        S extends CartItem,
+        I extends S & Total,
+        R extends Items<I>,
+        D extends Cart<S>,
+        T extends Order<R & Shipping & Total>
+    >(order: T) => ({
+        invoice: (invoice: D) => orderCart_(deepFreeze(order)).invoice(deepFreeze(invoice)),
+        refund: (refund: D) => orderCart_(deepFreeze(order)).refund(deepFreeze(refund)),
+        cancel: (cancel: D) => orderCart_(deepFreeze(order)).cancel(deepFreeze(cancel)) })
+
     it('Implement basic', () => {
         const results = [
             _.basic({ shipping: 2.71, items: [{ id: 'a', price: 12, qty: 5 }, { id: 'b', price: 10, qty: 3 }] }),

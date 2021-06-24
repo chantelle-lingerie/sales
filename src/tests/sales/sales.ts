@@ -1,4 +1,5 @@
 import { order as o, cart as c, Total, Items, CartItem, Cart, Order, Shipping } from '../../index'
+import { deepFreeze } from '../deepFreeze'
 
 type ResultDocument = {
     items?: (CartItem & Total)[],
@@ -18,8 +19,8 @@ export const scenario = <T extends (cart: C) => C & Items<U & Total> & Total, U 
         invoice: doInvoice(order),
         refund: doRefund(order),
         cancel: doCancel(order),
-        spreading: c.order(order),
-    }))({ ...cart, ...totals(cart), canceled: [], invoiced: [], refunded: [] } as Order<Shipping & Total & Items<U & Total>>)
+        spreading: c.order<U & Total, Order<Shipping & Total & Items<U & Total>>, Cart<U & Total> & C>(order),
+    }))(deepFreeze({ ...cart, ...totals(cart), canceled: [], invoiced: [], refunded: [] }) as Order<Shipping & Total & Items<U & Total>>)
 
 const doInvoice = <
     S extends U & Total,
@@ -35,8 +36,8 @@ const doInvoice = <
     refund: doRefund<S, V, U, C, T>(order),
     cancel: doCancel<S, V, U, C, T>(order),
     spreading: c.order<S, T, Cart<S>>(order),
-}))({ ...order, invoiced: [...order.invoiced, invoice] })
-)((cart => cart.total(rulesCalculator(cart)))(o.total<U, C, S, V, T>(order).invoice(invoice)))
+}))(deepFreeze({ ...order, invoiced: [...order.invoiced, invoice] }))
+)((cart => cart.total(rulesCalculator(cart)))(o.total<U, C, S, V, T>(order).invoice(deepFreeze(invoice))))
 
 const doRefund = <
     S extends U & Total,
@@ -52,8 +53,8 @@ const doRefund = <
     refund: doRefund<S, V, U, C, T>(order),
     cancel: doCancel<S, V, U, C, T>(order),
     spreading: c.order<S, T, Cart<S>>(order),
-}))({ ...order, refunded: [...order.refunded, refund] })
-)((cart => cart.total(rulesCalculator(cart)))(o.total<U, C, S, V, T>(order).refund(refund)))
+}))(deepFreeze({ ...order, refunded: [...order.refunded, refund] }))
+)((cart => cart.total(rulesCalculator(cart)))(o.total<U, C, S, V, T>(order).refund(deepFreeze(refund))))
 
 const doCancel = <
     S extends U & Total,
@@ -69,5 +70,5 @@ const doCancel = <
     refund: doRefund<S, V, U, C, T>(order),
     cancel: doCancel<S, V, U, C, T>(order),
     spreading: c.order<S, T, Cart<S>>(order),
-}))({ ...order, canceled: [...order.canceled, cancel] })
-)((cart => cart.total(rulesCalculator(cart)))(o.total<U, C, S, V, T>(order).cancel(cancel)))
+}))(deepFreeze({ ...order, canceled: [...order.canceled, cancel] }))
+)((cart => cart.total(rulesCalculator(cart)))(o.total<U, C, S, V, T>(order).cancel(deepFreeze(cancel))))

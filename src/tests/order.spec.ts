@@ -1,7 +1,22 @@
-import { order as _, ItemQty } from '../index'
+import { order as __, ItemQty, Order, Shipping, Total, Price, Items } from '../index'
 import { order } from './order'
+import { deepFreeze } from './deepFreeze'
 
 describe('Basic order functionality', () => {
+    const _ = {
+        shipping: <U extends Shipping, T extends Order<U>>(order: T) => ({
+            invoice: (invoice: U) => __.shipping(deepFreeze(order)).invoice(deepFreeze(invoice)),
+            cancel: (cancelation: U) => __.shipping(deepFreeze(order)).cancel(deepFreeze(cancelation)),
+            refund: (refund: U) => __.shipping(deepFreeze(order)).refund(deepFreeze(refund)) }),
+        itemsQty: <V extends ItemQty, U extends Items<V>, T extends Order<U>>(order: T) => ({
+            invoice: (invoice: U) => __.itemsQty(deepFreeze(order)).invoice(deepFreeze(invoice)),
+            cancel: (cancelation: U) => __.itemsQty(deepFreeze(order)).cancel(deepFreeze(cancelation)),
+            refund: (refund: U) => __.itemsQty(deepFreeze(order)).refund(deepFreeze(refund)) }),
+        sales: {
+            shipping: <T extends Order<Shipping>>(order: T) => __.sales.shipping(deepFreeze(order)),
+            total: <T extends Order<Total>>(order: T) => __.sales.total(deepFreeze(order)),
+            items: <V extends ItemQty & Total & Price, U extends Items<V>, T extends Order<U>>(order: T) => __.sales.items(deepFreeze(order)) } }
+
     describe('Sales: CI/CR/IR (canceled/invoiced/refunded)', () => {
         it('Calculate shipping and total', () => {
             expect(_.sales.shipping(order)).toEqual({ ci: 0, cr: 0.59, ir: 0.59 })
