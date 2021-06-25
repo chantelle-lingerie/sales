@@ -1,25 +1,25 @@
-import { Items, Item, Total, Shipping, ItemTotal, ItemQty, Price } from './interfaces'
+import { ItemsRO, ItemRO, TotalRO, ShippingRO, ItemTotalRO, ItemQtyRO, PriceRO } from './readonlyInterfaces'
 import { addPrices, itemsGroupReduce, minusItem } from './basics'
 
-const mergeItems_ = <U extends Item, T extends Items<U>>(documents: T[]) => documents
+const mergeItems_ = <U extends ItemRO, T extends ItemsRO<U>>(documents: readonly T[]) => documents
     .reduce((acc, document) => [...acc, ...document.items], [] as U[])
 
 export const documents = {
-    total: <T extends Total>(documents: T[]) => addPrices(...documents.map(({ total }) => total)),
-    shipping: <T extends Shipping>(documents: T[]) => addPrices(...documents.map(({ shipping }) => shipping)),
+    total: <T extends TotalRO>(documents: readonly T[]) => addPrices(...documents.map(({ total }) => total)),
+    shipping: <T extends ShippingRO>(documents: readonly T[]) => addPrices(...documents.map(({ shipping }) => shipping)),
     items: {
-        total: <U extends ItemTotal, T extends Items<U>>(documents: T[]) =>
+        total: <U extends ItemTotalRO, T extends ItemsRO<U>>(documents: readonly T[]) =>
             itemsGroupReduce<U, U>(item => ({ ...item, total: 0 }))(
                 mergeItems_(documents),
                 (acc, item) => ({ ...acc, ...item, total: addPrices(acc.total, item.total) })),
-        qty: <U extends ItemQty, T extends Items<U>>(documents: T[]) =>
+        qty: <U extends ItemQtyRO, T extends ItemsRO<U>>(documents: readonly T[]) =>
             itemsGroupReduce<U, U>(item => ({ ...item, qty: 0 }))(
                 mergeItems_(documents),
                 (acc, item) => ({ ...acc, ...item, qty: acc.qty + item.qty })),
         minus: <
-            I extends  ItemQty & Total, S extends Items<I>,
-            P extends ItemQty & Total & Price, T extends Items<P>
-        >(from: T[], subtrahend: S[]) =>
+            I extends  ItemQtyRO & TotalRO, S extends ItemsRO<I>,
+            P extends ItemQtyRO & TotalRO & PriceRO, T extends ItemsRO<P>
+        >(from: readonly T[], subtrahend: readonly S[]) =>
             itemsGroupReduce<I, I>(item => ({ ...item, qty: 0, total: 0 }))(
                 mergeItems_(subtrahend),
                 (acc, item) => ({

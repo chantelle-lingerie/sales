@@ -1,7 +1,9 @@
-import { invariants, Order, Shipping, Total, Items, ItemQty, ItemTotal } from '../index'
+import { Order, Shipping, Total, Items, ItemQty, ItemTotal } from '../index'
+import { invariants } from './freezedInvariants'
 
 describe('Order Invariants', () => {
-    const { shipping, total, items } = invariants
+    const { total, shipping, items } = invariants
+
     describe('Shipping', () => {
         const shipping_ = (order: Partial<Order<Shipping>>) => shipping({ shipping: 0, invoiced: [], refunded: [], canceled: [], ...order })
         describe('Quantity', () => {

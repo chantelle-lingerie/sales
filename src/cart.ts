@@ -1,21 +1,21 @@
-import { Order, Items, Cart, CartItem, Shipping, Total, CartTotals } from './interfaces'
+import { OrderRO, ItemsRO, CartRO, CartItemRO, ShippingRO, TotalRO, CartTotalsRO } from './readonlyInterfaces'
 import { addPrices, enrichItem, minusPrice } from './basics'
 import { documents as d } from './documents'
 import { order as o } from './order'
 
 export const cart = {
-    basic: <U extends CartItem, T extends Cart<U>>(request: T): T & CartTotals<U & Total> =>
+    basic: <U extends CartItemRO, T extends CartRO<U>>(request: T) =>
         (items => ({
             ...request,
             items,
             total: addPrices(request.shipping, d.total(items)),
         }))(request.items.map(item => enrichItem(item))),
     order: <
-        V extends CartItem & Total,
-        T extends Order<CartTotals<V>>,
-        S extends Cart<V>
+        V extends CartItemRO & TotalRO,
+        T extends OrderRO<CartTotalsRO<V>>,
+        S extends CartRO<V>
     >(order: T) =>
-        (request: S): S & Total =>
+        (request: S) =>
             ((shipping, subtotal) => ({
                 ...request,
                 shipping,
@@ -33,21 +33,21 @@ export const cart = {
                 d.total(request.items)) }
 
 export const orderCart = <
-    S extends CartItem,
-    I extends S & Total,
-    R extends Items<I>,
-    D extends Cart<S>,
-    T extends Order<R & Shipping & Total>
+    S extends CartItemRO,
+    I extends S & TotalRO,
+    R extends ItemsRO<I>,
+    D extends CartRO<S>,
+    T extends OrderRO<R & ShippingRO & TotalRO>
 >(order: T) => ({
-    invoice: (invoice: D): D & CartTotals<I> => (request => request.total<
-        I, D & CartTotals<I>>(cart.order<
-            I, T, D & Cart<I>>(order)(request)))(o.total<
+    invoice: (invoice: D) => (request => request.total<
+        I, D & CartTotalsRO<I>>(cart.order<
+            I, T, D & CartRO<I>>(order)(request)))(o.total<
                 S, D, I, R, T>(order).invoice(invoice)),
-    refund: (refund: D): D & CartTotals<I> => (request => request.total<
-        I, D & CartTotals<I>>(cart.order<
-            I, T, D & Cart<I>>(order)(request)))(o.total<
+    refund: (refund: D) => (request => request.total<
+        I, D & CartTotalsRO<I>>(cart.order<
+            I, T, D & CartRO<I>>(order)(request)))(o.total<
                 S, D, I, R, T>(order).refund(refund)),
-    cancel: (cancel: D): D & CartTotals<I> => (request => request.total<
-        I, D & CartTotals<I>>(cart.order<
-            I, T, D & Cart<I>>(order)(request)))(o.total<
+    cancel: (cancel: D) => (request => request.total<
+        I, D & CartTotalsRO<I>>(cart.order<
+            I, T, D & CartRO<I>>(order)(request)))(o.total<
                 S, D, I, R, T>(order).cancel(cancel)) })
