@@ -13,7 +13,7 @@
     "test": "jest --config=./config/jest.js --coverage"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.18",
+    "@types/jest": "^25.1.0",
     "@types/node": "^12.20.18",
     "copyfiles": "^2.4.0",
     "del-cli": "^3.0.1",
