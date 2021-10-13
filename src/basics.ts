@@ -1,5 +1,5 @@
 import { ItemRO } from './readonlyInterfaces'
-import * as i from './injectable'
+import * as i from './injectable/basics'
 
 const numberToPriceUpDown_ = {
     up: (price: number) => Number.parseFloat(price.toFixed(2)),

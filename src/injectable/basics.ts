@@ -14,7 +14,7 @@ export const enrichItem = (ntp: NumberToPrice) =>
         const total = typeof item.total === 'number'
             ? item.total
             : itemPrice(ntp)(item)
-        return {...item, total}
+        return { ...item, total }
     }
 
 export const itemDiscount = (ntp: NumberToPrice) => {
