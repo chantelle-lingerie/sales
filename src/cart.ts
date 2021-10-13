@@ -42,12 +42,12 @@ export const orderCart = <
     invoice: (invoice: D) => (request => request.total<
         I, D & CartTotalsRO<I>>(cart.order<
             I, T, D & CartRO<I>>(order)(request)))(o.total<
-                S, D, I, R, T>(order).invoice(invoice)),
+                S, I, R, T>(order).invoice<D>(invoice)),
     refund: (refund: D) => (request => request.total<
         I, D & CartTotalsRO<I>>(cart.order<
             I, T, D & CartRO<I>>(order)(request)))(o.total<
-                S, D, I, R, T>(order).refund(refund)),
+                S, I, R, T>(order).refund<D>(refund)),
     cancel: (cancel: D) => (request => request.total<
         I, D & CartTotalsRO<I>>(cart.order<
             I, T, D & CartRO<I>>(order)(request)))(o.total<
-                S, D, I, R, T>(order).cancel(cancel)) })
+                S, I, R, T>(order).cancel<D>(cancel)) })

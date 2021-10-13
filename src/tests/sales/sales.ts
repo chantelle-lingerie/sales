@@ -37,7 +37,7 @@ const doInvoice = <
     cancel: doCancel<S, V, U, C, T>(order),
     spreading: c.order<S, T, Cart<S>>(order),
 }))(deepFreeze({ ...order, invoiced: [...order.invoiced, invoice] }))
-)((cart => cart.total(rulesCalculator(cart)))(o.total<U, C, S, V, T>(order).invoice(deepFreeze(invoice))))
+)((cart => cart.total(rulesCalculator(cart)))(o.total<U, S, V, T>(order).invoice<C>(deepFreeze(invoice))))
 
 const doRefund = <
     S extends U & Total,
@@ -54,7 +54,7 @@ const doRefund = <
     cancel: doCancel<S, V, U, C, T>(order),
     spreading: c.order<S, T, Cart<S>>(order),
 }))(deepFreeze({ ...order, refunded: [...order.refunded, refund] }))
-)((cart => cart.total(rulesCalculator(cart)))(o.total<U, C, S, V, T>(order).refund(deepFreeze(refund))))
+)((cart => cart.total(rulesCalculator(cart)))(o.total<U, S, V, T>(order).refund<C>(deepFreeze(refund))))
 
 const doCancel = <
     S extends U & Total,
@@ -71,4 +71,4 @@ const doCancel = <
     cancel: doCancel<S, V, U, C, T>(order),
     spreading: c.order<S, T, Cart<S>>(order),
 }))(deepFreeze({ ...order, canceled: [...order.canceled, cancel] }))
-)((cart => cart.total(rulesCalculator(cart)))(o.total<U, C, S, V, T>(order).cancel(deepFreeze(cancel))))
+)((cart => cart.total(rulesCalculator(cart)))(o.total<U, S, V, T>(order).cancel<C>(deepFreeze(cancel))))
