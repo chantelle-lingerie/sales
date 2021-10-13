@@ -26,7 +26,7 @@ export const itemDiscount = (ntp: NumberToPrice) => {
 export const divideTotal = (ntp: NumberToPrice) => {
     const minusPrice_ = minusPrice(ntp)
     return <T extends TotalRO & QtyRO>(item: T) => {
-        const result = { items: [] as T[], sum: 0 }
+        const result: { items: T[], sum: number } = { items: [], sum: 0 }
         for (let n = 0; n < item.qty; n++) {
             const total = ntp(item.total * (n + 1) / item.qty)
             result.items.push({ ...item,

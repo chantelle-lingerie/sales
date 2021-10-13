@@ -38,29 +38,28 @@ describe('Basic order functionality', () => {
         })
     })
     describe('Operations', () => {
-        describe('Invoices', () => {
-            it('Check shipping', () => {
-                const shipping = _.shipping(order)
-                expect(shipping.invoice({ shipping: .01 })).toEqual({ qty: -1, total: -.01 })
-                expect(shipping.invoice({ shipping: 0 })).toEqual({ qty: 0, total: 0 })
-                expect(shipping.refund({ shipping: .58 })).toEqual({ qty: -1, total: .01 })
-                expect(shipping.refund({ shipping: .6 })).toEqual({ qty: -1, total: -.01 })
-                expect(shipping.cancel({ shipping: .01 })).toEqual({ qty: -1, total: -.01 })
-                expect(shipping.cancel({ shipping: 0 })).toEqual({ qty: 0, total: 0 })
-            })
-            it('Check items quantity', () => {
-                const items = _.itemsQty(order)
-                const builder = (qty: number) => [({ id: 'b', qty })]
-                const filterMap = <T extends ItemQty>(items: T[]) => items
-                    .filter(({ id }) => id === 'b')
-                    .map(({ id, qty }) => ({ id, qty }))
-                expect(filterMap(items.invoice({ items: builder(1) }))).toEqual(builder(0))
-                expect(filterMap(items.invoice({ items: builder(2) }))).toEqual(builder(-1))
-                expect(filterMap(items.cancel({ items: builder(1) }))).toEqual(builder(0))
-                expect(filterMap(items.cancel({ items: builder(2) }))).toEqual(builder(-1))
-                expect(filterMap(items.refund({ items: builder(1) }))).toEqual(builder(0))
-                expect(filterMap(items.refund({ items: builder(2) }))).toEqual(builder(-1))
-            })
+        it('Check shipping', () => {
+            const shipping = _.shipping(order)
+            expect(shipping.invoice({ shipping: .01 })).toEqual({ qty: -1, total: -.01 })
+            expect(shipping.invoice({ shipping: 0 })).toEqual({ qty: 0, total: 0 })
+            expect(shipping.refund({ shipping: .58 })).toEqual({ qty: -1, total: .01 })
+            expect(shipping.refund({ shipping: .6 })).toEqual({ qty: -1, total: -.01 })
+            expect(shipping.cancel({ shipping: .01 })).toEqual({ qty: -1, total: -.01 })
+            expect(shipping.cancel({ shipping: 0 })).toEqual({ qty: 0, total: 0 })
         })
+        it('Check items quantity', () => {
+            const items = _.itemsQty(order)
+            const builder = (qty: number) => [({ id: 'b', qty })]
+            const filterMap = <T extends ItemQty>(items: T[]) => items
+                .filter(({ id }) => id === 'b')
+                .map(({ id, qty }) => ({ id, qty }))
+            expect(filterMap(items.invoice({ items: builder(1) }))).toEqual(builder(0))
+            expect(filterMap(items.invoice({ items: builder(2) }))).toEqual(builder(-1))
+            expect(filterMap(items.cancel({ items: builder(1) }))).toEqual(builder(0))
+            expect(filterMap(items.cancel({ items: builder(2) }))).toEqual(builder(-1))
+            expect(filterMap(items.refund({ items: builder(1) }))).toEqual(builder(0))
+            expect(filterMap(items.refund({ items: builder(2) }))).toEqual(builder(-1))
+        })
+        // TODO: Add total tests (they're covered only in sales tests)
     })
 })

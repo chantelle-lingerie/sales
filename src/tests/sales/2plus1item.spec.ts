@@ -3,19 +3,23 @@ import { scenario, checkDocument } from './sales'
 
 describe('2 + 1: every 3rd cheapest product discounted', () => {
     describe('Reduced to 1 euro', () => {
-        const promotionTotals = <U extends CartItem, C extends Cart<U>>(cart: C) => (items =>
-            ({ ...cart, items, total: addPrices(cart.shipping, ...items.map(({ total }) => total)) })
-        )([...cart.items]
-            .sort(({ price: a }, { price: b }) => a - b)
-            .reduce((acc, item) => ({
-                c: acc.c - item.qty,
-                items: [...acc.items, ...(acc.c <= 0 ? [{ ...item, total: itemPrice(item) }] : acc.c >= item.qty
-                        ? [{ ...item, total: item.qty }]
-                        : [{ ...item, total: addPrices(acc.c, itemPrice({ ...item, qty: item.qty - acc.c })) }])],
-            }), {
+        const promotionTotals = <U extends CartItem, C extends Cart<U>>(cart: C) => {
+            const sorted = [...cart.items].sort(({ price: a }, { price: b }) => a - b)
+            const result: { c: number, items: (U & Total)[] } = {
                 c: Math.floor(cart.items.reduce((acc, { qty }) => acc + qty, 0) / 3),
-                items: [],
-            } as { c: number, items: (U & Total)[] }).items)
+                items: [] }
+            for (const item of sorted) {
+                if (result.c <= 0) {
+                    result.items.push({ ...item, total: itemPrice(item) })
+                } else if (result.c >= item.qty) {
+                    result.items.push({ ...item, total: item.qty })
+                } else {
+                    result.items.push({ ...item, total: addPrices(result.c, itemPrice({ ...item, qty: item.qty - result.c })) })
+                }
+                result.c -= item.qty
+            }
+            return { ...cart, items: result.items, total: addPrices(cart.shipping, ...result.items.map(({ total }) => total)) }
+        }
 
         const oneEuroRule = scenario(promotionTotals)
 
