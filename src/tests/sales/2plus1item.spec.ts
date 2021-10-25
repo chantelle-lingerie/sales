@@ -55,10 +55,10 @@ describe('2 + 1: every 3rd cheapest product discounted', () => {
                 const cancelAfterInvoice = firstInvoice.cancel(promotionTotals, cancelData)
                 checkDocument(cancelAfterInvoice.result, cancelExpectations)
                 // Can invoice for promotion cancelation fee!
-                const invoicedOrder = { ...cancelAfterInvoice.order,
-                    invoiced: [...cancelAfterInvoice.order.invoiced, { total: 4, shipping: 0, items: [] }]}
-                expect(invariants.total(invoicedOrder).ir).toBe(17.71)
-                expect(invariants.total(invoicedOrder).ci).toBe(0)
+                const restInvoiced = cancelAfterInvoice.invoice(promotionTotals, { shipping: 0, items: [] })
+                checkDocument(restInvoiced.result, { shipping: 0, items: [], total: 4 })
+                expect(invariants.total(restInvoiced.order).ir).toBe(17.71)
+                expect(invariants.total(restInvoiced.order).ci).toBe(0)
 
                 const firstRefund = firstInvoice.refund(promotionTotals, refundData)
                 checkDocument(firstRefund.result, { shipping: 0, total: 6, items: [orderItems[0]] })
@@ -134,8 +134,13 @@ describe('2 + 1: every 3rd cheapest product discounted', () => {
 
                 const firstRefund = firstInvoice.refund(promotionTotals, refundData)
                 checkDocument(firstRefund.result, { shipping: 0, total: 1, items: [{ id: 'a', qty: 1, price: 10, total: 1 }] })
-                // cancel the rest: discount fee deducted from the refund
-                checkDocument(firstRefund.cancel(promotionTotals, cancelData).result, { ...cancelExpectations, total: 1 })
+                const secondCancelation = firstRefund.cancel(promotionTotals, cancelData)
+                checkDocument(secondCancelation.result, { ...cancelExpectations, total: 1 })
+                // refund the rest: adjustment to the fist refund after cancelation
+                const refundFee = secondCancelation.refund(promotionTotals, { shipping: 0, items: [] })
+                checkDocument(refundFee.result, { shipping: 0, items: [], total: 9 })
+                expect(invariants.total(refundFee.order).ir).toBe(12.71)
+                expect(invariants.total(refundFee.order).ci).toBe(0)
 
                 const secondInvoice = firstInvoice.invoice(promotionTotals, secondInvoiceData)
                 checkDocument(secondInvoice.result, secondInvoiceExpectations)

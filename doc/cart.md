@@ -17,10 +17,9 @@ and calculates cart `total` as the sum of items `total`s.
 ```
 order: <
   V extends CartItem & Total,
-  T extends Order<CartTotals<V>>,
-  S extends Cart<V>
+  T extends Order<CartTotals<V>>
 >(order: T) =>
-  (request: S) => S & Total
+  <S extends Cart<V>>(request: S) => S & Total
 ```
 This cart uses the order information (related to the cart).
 First, we should give the current order state,
@@ -37,12 +36,11 @@ orderCart: <
   S extends CartItem,
   I extends S & Total,
   R extends Items<I>,
-  D extends Cart<S>,
   T extends Order<R & Shipping & Total>
 >(order: T) => {
-  invoice: (invoice: D) => D & CartTotals<I>;
-  refund: (refund: D) => D & CartTotals<I>;
-  cancel: (cancel: D) => D & CartTotals<I>;
+  invoice: <D extends Cart<S>>(invoice: D) => D & CartTotals<I>;
+  refund: <D extends Cart<S>>(refund: D) => D & CartTotals<I>;
+  cancel: <D extends Cart<S>>(cancel: D) => D & CartTotals<I>;
 }
 ```
 So, with the `orderCart` initialized by the order, we have 3 functions easy to use:
