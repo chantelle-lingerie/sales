@@ -59,3 +59,4 @@ This function allows you to do the same, but:
 - [Invariants](./invariants.md)
 - [Cart](./cart.md)
 - [Order](./order.md) (high-order functions)
+- [Injectable API](./injectable.md)

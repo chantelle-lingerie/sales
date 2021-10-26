@@ -150,3 +150,4 @@ This is the highest-order function in Basics.
 - [Invariants](./invariants.md)
 - [Cart](./cart.md)
 - [Order](./order.md) (high-order functions)
+- [Injectable API](./injectable.md)

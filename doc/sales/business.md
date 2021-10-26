@@ -52,3 +52,4 @@ For more information see the [Order model](../sales.pdf) diagrams.
 - [Invariants](../invariants.md)
 - [Cart](../cart.md)
 - [Order](../order.md) (high-order functions)
+- [Injectable API](../injectable.md)

@@ -82,7 +82,7 @@ export const takeItem = (ntp: {up: NumberToPrice, down: NumberToPrice}) =>
         }
     }
 
-export const takeItems = ({up, down, reduce}: {up: NumberToPrice, down: NumberToPrice, reduce: ItemReduce}) =>
+export const takeItems = ({ up, down, reduce }: { up: NumberToPrice, down: NumberToPrice, reduce: ItemReduce }) =>
     (cheapest: boolean) =>
         <T extends ItemQtyRO & TotalRO, U extends ItemQtyRO>(from: R<T>, items: R<U>) => {
             const groupedQty = itemsGroupReduce(reduce)<U, U>(item => ({ ...item, qty: 0 }))

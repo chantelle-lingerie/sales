@@ -72,7 +72,7 @@ items: <
 The function gives values for the items (`qty`, `total`) in `CI`, `IR`, `CR`.
 Grouped by each item `id`.
 
-### order.sales.total
+### order.total
 This function designed to calculate the final costs (for items and the "sales operation" `total` costs)
 based on the provided [Cart model](./cart.md).
 This is the main, the most high-order function in the library.
@@ -133,3 +133,4 @@ and also prove the [business cases](./sales/business.md) for custom cart calcula
 - [Documents](./documents.md)
 - [Invariants](./invariants.md)
 - [Cart](./cart.md)
+- [Injectable API](./injectable.md)

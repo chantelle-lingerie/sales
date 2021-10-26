@@ -54,4 +54,4 @@ So, with the `orderCart` initialized by the order, we have 3 functions easy to u
 - [Documents](./documents.md)
 - [Invariants](./invariants.md)
 - [Order](./order.md) (high-order functions)
-
+- [Injectable API](./injectable.md)

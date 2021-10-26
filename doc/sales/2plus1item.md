@@ -110,3 +110,4 @@ the refund amount should be <span style="color:green">**1€**</span>
 - [Invariants](../invariants.md)
 - [Cart](../cart.md)
 - [Order](../order.md) (high-order functions)
+- [Injectable API](../injectable.md)
