@@ -1,3 +1,7 @@
+2.0.1
+=============
+* Security fixes in dev dependencies
+
 2.0.0
 =============
 * Injectable extension for every function

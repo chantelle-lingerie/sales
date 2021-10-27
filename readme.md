@@ -125,3 +125,4 @@ All interfaces are extendable in functions, so you can use more specific types i
 - [Invariants](./doc/invariants.md)
 - [Cart](./doc/cart.md)
 - [Order](./doc/order.md) (high-order functions)
+- [Injectable API](./doc/injectable.md)
