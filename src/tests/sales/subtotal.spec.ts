@@ -4,14 +4,12 @@ import { scenario, checkDocument } from './sales'
 describe('Discount on subtotal amount', () => {
     describe('2 euro on subtotal over 20 euro', () => {
         const promotionTotals = (params: { limit?: number, discount?: number } = {}) =>
-            <U extends CartItem, C extends Cart<U>>(cart: C) =>
-                ((subtotal, cart, { limit, discount }) => ({
-                    ...cart,
-                    total: subtotal >= limit ? minusPrice(cart.total, discount) : cart.total
-                }))(
-                    addPrices(d.total(cart.items.map(enrichItem))),
-                    c.basic(cart),
-                    { limit: 20, discount: 2, ...params } )
+            <U extends CartItem, C extends Cart<U>>(cart: C) => {
+                const subtotal = addPrices(d.total(cart.items.map(enrichItem)))
+                const cart_ = c.basic(cart)
+                const total = subtotal >= 20 ? minusPrice(cart_.total, 2) : cart_.total
+                return { ...cart_, total }
+            }
         const disountRule = scenario(promotionTotals())
 
         const items = [

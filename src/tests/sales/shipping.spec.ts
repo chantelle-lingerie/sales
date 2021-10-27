@@ -3,14 +3,13 @@ import { scenario, checkDocument } from './sales'
 
 describe('Shipping discount', () => {
     describe('Free shipping on 3 (or more) items', () => {
-        const promotionTotals = <U extends CartItem, C extends Cart<U>>(cart: C) =>
-            ((cart, discount) => ({
-                ...cart,
-                shipping: discount ? 0 : cart.shipping,
-                total: discount ? minusPrice(cart.total, cart.shipping) : cart.total
-            }))(c.basic(cart),
-                cart.items
-                    .reduce((acc, { qty }) => acc + qty, 0) >= 3)
+        const promotionTotals = <U extends CartItem, C extends Cart<U>>(cart: C) => {
+            const cart_ = c.basic(cart)
+            const discount = cart.items.reduce((acc, { qty }) => acc + qty, 0) >= 3
+            const shipping = discount ? 0 : cart_.shipping
+            const total = discount ? minusPrice(cart_.total, cart_.shipping) : cart_.total
+            return { ...cart_, shipping, total }
+        }
 
         const disountRule = scenario(promotionTotals)
 

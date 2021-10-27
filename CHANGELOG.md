@@ -1,3 +1,11 @@
+2.0.0
+=============
+* Injectable extension for every function
+* :exclamation: Backward incompatibility: changed types for `order.total`
+* :exclamation: Backward incompatibility: changed types for `cart.order` and `orderCart`
+* Removed IIFE for the code readability
+* Fixes in the documentation
+
 1.2.0
 =============
 * Read-only interfaces (immutable types)

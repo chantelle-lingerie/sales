@@ -72,31 +72,30 @@ items: <
 The function gives values for the items (`qty`, `total`) in `CI`, `IR`, `CR`.
 Grouped by each item `id`.
 
-### order.sales.total
+### order.total
 This function designed to calculate the final costs (for items and the "sales operation" `total` costs)
 based on the provided [Cart model](./cart.md).
 This is the main, the most high-order function in the library.
 ```
 total: <
   S extends CartItem,
-  D extends Cart<S>,
   I extends S & Total,
   R extends Items<I>,
   T extends Order<R & Shipping & Total>
 >(order: T) => {
-  invoice: (invoice: D) => D & Items<I> & {
+  invoice: <D extends Cart<S>>(invoice: D) => D & Items<I> & {
     total: <
       U extends S & Total,
       V extends D & CartTotals<U>
     >(cart: V) => D & Total & Items<U>
   };
-  cancel: (cancel: D) => D & Items<I> & {
+  cancel: <D extends Cart<S>>(cancel: D) => D & Items<I> & {
     total: <
       U extends S & Total,
       V extends D & CartTotals<U>
     >(cart: V) => D & Total & Items<U>
   };
-  refund: (refund: D) => D & Items<I> & {
+  refund: <D extends Cart<S>>(refund: D) => D & Items<I> & {
     total: <
       U extends S & Total,
       V extends D & CartTotals<U>
@@ -107,7 +106,7 @@ total: <
 First, you initialize this function with the order itself.
 After this you have 3 "sales operations", each of them has the same interface:
 ```
-  operation: (request: D) => D & Items<I> & {
+  operation: <D extends Cart<S>>(request: D) => D & Items<I> & {
     total: <
       U extends S & Total,
       V extends D & CartTotals<U>
@@ -123,8 +122,8 @@ and this function will give you back the final "document" for your request,
 the document of `invoice`, `refund`, or `cancellation`.   
 
 See examples in the tests.
-Take into account, that `sales` tests do not increase the code coverage -
-they just prove the [business cases](./sales/business.md) for custom cart calculations.
+The `sales` tests help to cover some edge cases in invoice and cancelation calculations
+and also prove the [business cases](./sales/business.md) for custom cart calculations.
 
 ### Read more
 - [README home](../readme.md)
@@ -134,3 +133,4 @@ they just prove the [business cases](./sales/business.md) for custom cart calcul
 - [Documents](./documents.md)
 - [Invariants](./invariants.md)
 - [Cart](./cart.md)
+- [Injectable API](./injectable.md)

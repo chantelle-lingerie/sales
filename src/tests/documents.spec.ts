@@ -39,18 +39,26 @@ describe('Documents', () => {
 
         describe('Minus', () => {
             const arrayChunks = (size: number) =>
-                <T>(xs: T[]) => Array.from(Array(Math.ceil(xs.length / size)).keys())
-                    .reduce((chunks, c) => [
-                        ...chunks,
-                        xs.slice(c * size, (c + 1) * size)
-                    ], [] as T[][])
-            const from = (ids: string[] = ['a', 'b', 'c', 'd', 'e']) => arrayChunks(3)([
+                <T>(xs: T[]) => {
+                    const keys = Array.from(Array(Math.ceil(xs.length / size)).keys())
+                    const result: T[][] = []
+                    for (const k of keys) {
+                        result.push(xs.slice(k * size, (k + 1) * size))
+                    }
+                    return result
+                }
+            const items = [
                 { qty: 3, total: 7, price: 3 },
                 { qty: 1, total: 5, price: 5 },
                 { qty: 1, total: .6, price: 2 },
                 { qty: 2, total: 8.07, price: 4.33 }]
-                    .reduce((acc, item) => [...acc, ...ids.map(id => ({ ...item, id }))], [] as { id: string, qty: number, total: number, price: number }[]))
-                .map(chunk => ({ items: chunk }))
+            const from = (ids: string[] = ['a', 'b', 'c', 'd', 'e']) => {
+                const result: { id: string, qty: number, total: number, price: number }[] = []
+                for (const item of items) {
+                    result.push(...ids.map(id => ({ ...item, id })))
+                }
+                return arrayChunks(3)(result).map(chunk => ({ items: chunk }))
+            }
             it('Exact match', () => {
                 expect(new Set(_.items.minus(from(), [
                     { items: [{ id: 'a', qty: 3, total: 7 },

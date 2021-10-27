@@ -8,19 +8,17 @@ describe('Carts', () => {
         basic: <U extends CartItem, T extends Cart<U>>(request: T) => __.basic(deepFreeze(request)),
         order: <
             V extends CartItem & Total,
-            T extends Order<CartTotals<V>>,
-            S extends Cart<V>
-        >(order: T) => (request: S) => __.order(deepFreeze(order))(deepFreeze(request)) }
+            T extends Order<CartTotals<V>>
+        >(order: T) => <S extends Cart<V>>(request: S) => __.order(deepFreeze(order))(deepFreeze(request)) }
     const orderCart = <
         S extends CartItem,
         I extends S & Total,
         R extends Items<I>,
-        D extends Cart<S>,
         T extends Order<R & Shipping & Total>
     >(order: T) => ({
-        invoice: (invoice: D) => orderCart_(deepFreeze(order)).invoice(deepFreeze(invoice)),
-        refund: (refund: D) => orderCart_(deepFreeze(order)).refund(deepFreeze(refund)),
-        cancel: (cancel: D) => orderCart_(deepFreeze(order)).cancel(deepFreeze(cancel)) })
+        invoice: <D extends Cart<S>>(invoice: D) => orderCart_(deepFreeze(order)).invoice(deepFreeze(invoice)),
+        refund: <D extends Cart<S>>(refund: D) => orderCart_(deepFreeze(order)).refund(deepFreeze(refund)),
+        cancel: <D extends Cart<S>>(cancel: D) => orderCart_(deepFreeze(order)).cancel(deepFreeze(cancel)) })
 
     it('Implement basic', () => {
         const results = [

@@ -3,19 +3,23 @@ import { scenario, checkDocument } from './sales'
 
 describe('2 + 1: every 3rd cheapest product discounted', () => {
     describe('Reduced to 1 euro', () => {
-        const promotionTotals = <U extends CartItem, C extends Cart<U>>(cart: C) => (items =>
-            ({ ...cart, items, total: addPrices(cart.shipping, ...items.map(({ total }) => total)) })
-        )([...cart.items]
-            .sort(({ price: a }, { price: b }) => a - b)
-            .reduce((acc, item) => ({
-                c: acc.c - item.qty,
-                items: [...acc.items, ...(acc.c <= 0 ? [{ ...item, total: itemPrice(item) }] : acc.c >= item.qty
-                        ? [{ ...item, total: item.qty }]
-                        : [{ ...item, total: addPrices(acc.c, itemPrice({ ...item, qty: item.qty - acc.c })) }])],
-            }), {
+        const promotionTotals = <U extends CartItem, C extends Cart<U>>(cart: C) => {
+            const sorted = [...cart.items].sort(({ price: a }, { price: b }) => a - b)
+            const result: { c: number, items: (U & Total)[] } = {
                 c: Math.floor(cart.items.reduce((acc, { qty }) => acc + qty, 0) / 3),
-                items: [],
-            } as { c: number, items: (U & Total)[] }).items)
+                items: [] }
+            for (const item of sorted) {
+                if (result.c <= 0) {
+                    result.items.push({ ...item, total: itemPrice(item) })
+                } else if (result.c >= item.qty) {
+                    result.items.push({ ...item, total: item.qty })
+                } else {
+                    result.items.push({ ...item, total: addPrices(result.c, itemPrice({ ...item, qty: item.qty - result.c })) })
+                }
+                result.c -= item.qty
+            }
+            return { ...cart, items: result.items, total: addPrices(cart.shipping, ...result.items.map(({ total }) => total)) }
+        }
 
         const oneEuroRule = scenario(promotionTotals)
 
@@ -51,10 +55,10 @@ describe('2 + 1: every 3rd cheapest product discounted', () => {
                 const cancelAfterInvoice = firstInvoice.cancel(promotionTotals, cancelData)
                 checkDocument(cancelAfterInvoice.result, cancelExpectations)
                 // Can invoice for promotion cancelation fee!
-                const invoicedOrder = { ...cancelAfterInvoice.order,
-                    invoiced: [...cancelAfterInvoice.order.invoiced, { total: 4, shipping: 0, items: [] }]}
-                expect(invariants.total(invoicedOrder).ir).toBe(17.71)
-                expect(invariants.total(invoicedOrder).ci).toBe(0)
+                const restInvoiced = cancelAfterInvoice.invoice(promotionTotals, { shipping: 0, items: [] })
+                checkDocument(restInvoiced.result, { shipping: 0, items: [], total: 4 })
+                expect(invariants.total(restInvoiced.order).ir).toBe(17.71)
+                expect(invariants.total(restInvoiced.order).ci).toBe(0)
 
                 const firstRefund = firstInvoice.refund(promotionTotals, refundData)
                 checkDocument(firstRefund.result, { shipping: 0, total: 6, items: [orderItems[0]] })
@@ -130,8 +134,13 @@ describe('2 + 1: every 3rd cheapest product discounted', () => {
 
                 const firstRefund = firstInvoice.refund(promotionTotals, refundData)
                 checkDocument(firstRefund.result, { shipping: 0, total: 1, items: [{ id: 'a', qty: 1, price: 10, total: 1 }] })
-                // cancel the rest: discount fee deducted from the refund
-                checkDocument(firstRefund.cancel(promotionTotals, cancelData).result, { ...cancelExpectations, total: 1 })
+                const secondCancelation = firstRefund.cancel(promotionTotals, cancelData)
+                checkDocument(secondCancelation.result, { ...cancelExpectations, total: 1 })
+                // refund the rest: adjustment to the fist refund after cancelation
+                const refundFee = secondCancelation.refund(promotionTotals, { shipping: 0, items: [] })
+                checkDocument(refundFee.result, { shipping: 0, items: [], total: 9 })
+                expect(invariants.total(refundFee.order).ir).toBe(12.71)
+                expect(invariants.total(refundFee.order).ci).toBe(0)
 
                 const secondInvoice = firstInvoice.invoice(promotionTotals, secondInvoiceData)
                 checkDocument(secondInvoice.result, secondInvoiceExpectations)
