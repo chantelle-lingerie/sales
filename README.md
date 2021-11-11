@@ -336,7 +336,8 @@ Here we have our invoice document calculated:
 Again, we can see this difference here. Even we invoiced only 1€ for item `a`, we have invoice total amount of 10€, because it includes the fee. You can inform customer, that this happened because of promotion cancellation.
 
 The same will happen when you refund invoiced items. For more use-cases you can read at [business scenarios](./doc/sales/business.md). For more details read other parts of the documentation. For visual diagrams and calculation formulas you can check [Order model](./doc/sales.pdf)
-[![Order model](./doc/order.png)](./doc/sales.pdf)
+
+[![Order model](https://github.com/chantelle-lingerie/sales/raw/97e520fc923581436dbbf2dc6b6ab06dab0210e7/doc/order.png)](./doc/sales.pdf)
 
 ## Sales API
 For all documented functions you can also check the unit-tests to see the usage examples (100% coverage).
