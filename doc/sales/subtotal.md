@@ -62,8 +62,9 @@ the refund amount should be <span style="color:green">**7€**</span>
 - [Discount on a specific item](./2plus1item.md)
 
 ### Read more
-- [README home](../../readme.md)
+- [README home](../../README.md)
 - [Order model](../sales.pdf)
+- [Interfaces](../interfaces.md)
 - [Basics](../basics.md) (low-order functions)
 - [Documents](../documents.md)
 - [Invariants](../invariants.md)

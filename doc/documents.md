@@ -4,17 +4,21 @@ List of functions in this API grouped by `documents` object:
 This API mostly used as helper functions.
 
 ### documents.total
-`total: <T extends Total>(documents: T[]) => number`
+```typescript
+total: <T extends Total>(documents: T[]) => number
+```
 
 Simple sum of `total` in each element - calculates as prices (costs).
 
 ### documents.shipping
-`shipping: <T extends Shipping>(documents: T[]) => number`
+```typescript
+shipping: <T extends Shipping>(documents: T[]) => number
+```
 
 Simple sum of `shipping` in each element - calculates as prices (costs).
 
 ### documents.items.total
-```
+```typescript
 total: <
   U extends ItemTotal,
   T extends Items<U>
@@ -25,7 +29,7 @@ The function reduces items through all documents, aggregating by `id`
 and accumulates `total` for each item `id`.
 
 ### documents.items.qty
-```
+```typescript
 qty: <
   U extends ItemQty,
   T extends Items<U>
@@ -36,7 +40,7 @@ The function reduces items through all documents, aggregating by `id`
 and accumulates `qty` for each item `id`.
 
 ### documents.items.minus
-```
+```typescript
 minus: <
   I extends ItemQty & Total,
   S extends Items<I>,
@@ -52,8 +56,9 @@ This function allows you to do the same, but:
 - function does `minusItem()` per each item `id` separately, so takes into account **different** items 
 
 ### Read more
-- [README home](../readme.md)
+- [README home](../README.md)
 - [Order model](./sales.pdf)
+- [Interfaces](./interfaces.md)
 - [Business scenarios](./sales/business.md)
 - [Basics](./basics.md) (low-order functions)
 - [Invariants](./invariants.md)
