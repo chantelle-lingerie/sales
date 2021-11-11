@@ -1,6 +1,6 @@
 {
   "name": "@chantelle/sales",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Library for sales calculations: cart, order, invoice, refund, etc",
   "main": "build/index.js",
   "author": "Chantelle Lingerie GmbH",
