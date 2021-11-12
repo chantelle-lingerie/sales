@@ -33,94 +33,119 @@ Note: Here removed all `ReturnType<typeof ...>` for readability.
 If you see, for example, `ap: addPrices` - this means the real type is `ap: ReturnType<typeof addPrices>` (where `addPrices` is injectable, not built-in). So, `ap` dependency is the constructed `addPrices` with the `NumberToPrice` already injected.
 
 ### Basics
-- `addPrices: (ntp: NumberToPrice)`
-- `minusPrice: (ntp: NumberToPrice)`
-- `itemPrice: (ntp: NumberToPrice)`
-- `enrichItem: (ntp: NumberToPrice)`
-- `itemDiscount: (ntp: NumberToPrice)`
-- `divideTotal: (ntp: NumberToPrice)`
-- `itemsGroupReduce: (itemsReduce: ItemReduce)`
-- `takeItem: (ntp: {up: NumberToPrice, down: NumberToPrice})`
-- `takeItems: (injectable: {up: NumberToPrice, down: NumberToPrice, reduce: ItemReduce})`
-- `spreadAdjustment: (ntp: NumberToPrice)`
-- `minusItem: (ntp: NumberToPrice)`
+```typescript
+addPrices: (ntp: NumberToPrice)
+
+minusPrice: (ntp: NumberToPrice)
+
+itemPrice: (ntp: NumberToPrice)
+
+enrichItem: (ntp: NumberToPrice)
+
+itemDiscount: (ntp: NumberToPrice)
+
+divideTotal: (ntp: NumberToPrice)
+
+itemsGroupReduce: (itemsReduce: ItemReduce)
+
+takeItem: (ntp: {up: NumberToPrice, down: NumberToPrice})
+
+takeItems: (injectable: {
+    up: NumberToPrice,
+    down: berToPrice,
+    reduce: ItemReduce })
+
+spreadAdjustment: (ntp: NumberToPrice)
+
+minusItem: (ntp: NumberToPrice)
+```
 
 ### Documents
-- `documents.total: (ap: addPrices)`
-- `documents.shipping: (ap: addPrices)`
-- `documents.items.total: (injectable: {ap: addPrices, igr: itemsGroupReduce})`
-- `documents.items.qty: (igr: itemsGroupReduce)`
-- `documents.items.minus:`
-```
-(injectable: {
-    ap: addPrices,
-    igr: itemsGroupReduce,
-    mi: minusItem,
-})
+```typescript
+documents: {
+    total: (ap: addPrices)
+
+    shipping: (ap: addPrices)
+
+    items: {
+        total: (injectable: {ap: addPrices, igr: itemsGroupReduce})
+
+        qty: (igr: itemsGroupReduce)
+
+        minus: (injectable: {
+            ap: addPrices,
+            igr: itemsGroupReduce,
+            mi: minusItem }) } }
 ```
 
 ### Invariants
-- `invariants.total: (injectable: {mp: minusPrice, dt: documents.total})`
-- `invariants.shipping: (injectable: {mp: minusPrice, ds: documents.shipping})`
-- `invariants.items.qty: (diq: documents.items.qty)`
-- `invariants.items.total: (dit: documents.items.total)`
+```typescript
+invariants: {
+    total: (injectable: {mp: minusPrice, dt: documents.total})
+
+    shipping: (injectable: {mp: minusPrice, ds: documents.shipping})
+
+    items: {
+        qty: (diq: documents.items.qty)
+
+        total: (dit: documents.items.total) } }
+```
 
 ### Order
-- `order.shipping: (is: invariants.shipping)`
-- `order.itemsQty: (iiq: invariants.items.qty)`
-- `order.sales.shipping: (injectable: {mp: minusPrice, ap: addPrices})`
-- `order.sales.total: (injectable: {mp: minusPrice, ap: addPrices})`
-- `order.sales.items: (dim: documents.items.minus)`
-- `order.total:`
-```
-(injectable: {
-    mp: minusPrice,
-    ap: addPrices,
-    ti: takeItems,
-    dim: documents.items.minus,
-    iiq: invariants.items.qty,
-    it: invariants.total,
-    dt: documents.total,
-    dit: documents.items.total,
-})
+```typescript
+order: {
+    shipping: (is: invariants.shipping)
+
+    itemsQty: (iiq: invariants.items.qty)
+
+    sales: {
+        shipping: (injectable: {mp: minusPrice, ap: addPrices})
+
+        total: (injectable: {mp: minusPrice, ap: addPrices})
+
+        items: (dim: documents.items.minus) }
+
+    total: (injectable: {
+        mp: minusPrice,
+        ap: addPrices,
+        ti: takeItems,
+        dim: documents.items.minus,
+        iiq: invariants.items.qty,
+        it: invariants.total,
+        dt: documents.total,
+        dit: documents.items.total }) }
 ```
 
 ### Cart
-- `cart.basic:`
-```
-(injectable: {
-    ap: addPrices,
-    dt: documents.total,
-    ei: enrichItem,
-})
-```
-- `cart.order:`
-```
-(injectable: {
-    ap: addPrices,
-    ost: order.sales.total,
-    mp: minusPrice,
-    oss: order.sales.shipping,
-    dt: documents.total,
-    osi: order.sales.items,
-})
-```
-- `orderCart:`
-```
-(injectable: {
+```typescript
+cart: {
+    basic: (injectable: {
+        ap: addPrices,
+        dt: documents.total,
+        ei: enrichItem })
+
+    order: (injectable: {
+        ap: addPrices,
+        ost: order.sales.total,
+        mp: minusPrice,
+        oss: order.sales.shipping,
+        dt: documents.total,
+        osi: order.sales.items }) }
+
+orderCart: (injectable: {
     ap: addPrices,
     ost: order.sales.total,
     mp: minusPrice,
     oss: order.sales.shipping,
     dt: documents.total,
     osi: order.sales.items,
-    ot: order.total,
-})
+    ot: order.total })
 ```
 
 ### Read more
-- [README home](../readme.md)
+- [README home](../README.md)
 - [Order model](./sales.pdf)
+- [Interfaces](./interfaces.md)
 - [Business scenarios](./sales/business.md)
 - [Basics](./basics.md) (low-order functions)
 - [Documents](./documents.md)

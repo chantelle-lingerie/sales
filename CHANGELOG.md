@@ -1,3 +1,8 @@
+2.0.3
+=============
+* Documentation
+* Usage examples (javascript)
+
 2.0.1
 =============
 * Security fixes in dev dependencies

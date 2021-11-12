@@ -7,7 +7,7 @@ gives you the way to calculate proper values for each context in the requested
 `invoice`, `refund`, or `cancel` operation (let's call it just **sales operation**).
 
 ### order.shipping
-```
+```typescript
 shipping: <
   U extends Shipping,
   T extends Order<U>
@@ -22,7 +22,7 @@ Here you can get (future) values for shipping invariants
 The information is static - does not require a [Cart model](./cart.md).
 
 ### order.itemsQty
-```
+```typescript
 itemsQty: <
   V extends ItemQty,
   U extends Items<V>,
@@ -38,7 +38,7 @@ Here you can get (future) values for items quantity invariants
 The information is static - does not require a [Cart model](./cart.md).
 
 ### order.sales.shipping
-```
+```typescript
 shipping: <T extends Order<Shipping>>(order: T) => {
   ci: number;
   cr: number;
@@ -48,7 +48,7 @@ shipping: <T extends Order<Shipping>>(order: T) => {
 The function gives values for the shipping costs in `CI`, `IR`, `CR`.
 
 ### order.sales.total
-```
+```typescript
 total: <T extends Order<Total>>(order: T) => {
   ci: number;
   cr: number;
@@ -58,7 +58,7 @@ total: <T extends Order<Total>>(order: T) => {
 The function gives values for the `total` costs in `CI`, `IR`, `CR`.
 
 ### order.sales.items
-```
+```typescript
 items: <
   V extends ItemQty & Total & Price,
   U extends Items<V>,
@@ -76,7 +76,7 @@ Grouped by each item `id`.
 This function designed to calculate the final costs (for items and the "sales operation" `total` costs)
 based on the provided [Cart model](./cart.md).
 This is the main, the most high-order function in the library.
-```
+```typescript
 total: <
   S extends CartItem,
   I extends S & Total,
@@ -105,7 +105,7 @@ total: <
 ```
 First, you initialize this function with the order itself.
 After this you have 3 "sales operations", each of them has the same interface:
-```
+```typescript
   operation: <D extends Cart<S>>(request: D) => D & Items<I> & {
     total: <
       U extends S & Total,
@@ -122,11 +122,11 @@ and this function will give you back the final "document" for your request,
 the document of `invoice`, `refund`, or `cancellation`.   
 
 See examples in the tests.
-The `sales` tests help to cover some edge cases in invoice and cancelation calculations
+The `sales` tests help to cover some edge cases in invoice and cancellation calculations
 and also prove the [business cases](./sales/business.md) for custom cart calculations.
 
 ### Read more
-- [README home](../readme.md)
+- [README home](../README.md)
 - [Order model](./sales.pdf)
 - [Business scenarios](./sales/business.md)
 - [Basics](./basics.md) (low-order functions)

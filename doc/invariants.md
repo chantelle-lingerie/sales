@@ -13,7 +13,7 @@ If you use sales ([order](./order.md)) functions without checking invariants,
 Negative values correspond to the "missing" amount/quantity in the [Order model](./sales.pdf) state.
 
 ### invariants.total
-```
+```typescript
 total: <T extends Order<Total>>({
   total,
   invoiced,
@@ -29,7 +29,7 @@ gives you `CI` and `IR` for `total` fields.
 Must not be negative!
 
 ### invariants.shipping
-```
+```typescript
 shipping: <T extends Order<Shipping>>({
   shipping,
   invoiced,
@@ -49,7 +49,7 @@ Same as `invariants.total`, but gives you 2 fields:
 - `qty` - if you want to control, that shipping costs are `invoiced` (`refunded`, `canceled`) only once, then this value must not be negative
 
 ## invariants.items.qty
-```
+```typescript
 qty: <
   V extends ItemQty,
   U extends Items<V>,
@@ -64,7 +64,7 @@ Aggregated per item `id`.
 Quantity for each item `id` must not be negative!
 
 ## invariants.items.total
-```
+```typescript
 total: <
   V extends ItemTotal,
   U extends Items<V>,
@@ -82,8 +82,9 @@ If you need `CI`, `IR`, `CR` values (not invariants),
 use `order.sales` from the [order API](./order.md)
 
 ### Read more
-- [README home](../readme.md)
+- [README home](../README.md)
 - [Order model](./sales.pdf)
+- [Interfaces](./interfaces.md)
 - [Business scenarios](./sales/business.md)
 - [Basics](./basics.md) (low-order functions)
 - [Documents](./documents.md)

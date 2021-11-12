@@ -42,11 +42,12 @@ The best what we can do (compromise) - spread the discount between sales documen
 
 For more information see the [Order model](../sales.pdf) diagrams.
 
-[![Order model](./order.png)](../sales.pdf)
+[![Order model](../order.png)](../sales.pdf)
 
 ### Read more
-- [README home](../../readme.md)
+- [README home](../../README.md)
 - [Order model](../sales.pdf)
+- [Interfaces](../interfaces.md)
 - [Basics](../basics.md) (low-order functions)
 - [Documents](../documents.md)
 - [Invariants](../invariants.md)

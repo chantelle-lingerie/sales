@@ -4,7 +4,7 @@ The cart should be able to calculate `total`s for each item and the cart `total`
 Two cart implementations provided in the `cart` object.
 
 ### cart.basic
-```
+```typescript
 basic: <
   U extends CartItem,
   T extends Cart<U>
@@ -14,7 +14,7 @@ This implementation just does `enrichItem()` for each item,
 and calculates cart `total` as the sum of items `total`s.
 
 ### cart.order
-```
+```typescript
 order: <
   V extends CartItem & Total,
   T extends Order<CartTotals<V>>
@@ -31,7 +31,7 @@ The "order cart" is commonly used, that's why there is already provided wrapper
 for [order functions](./order.md) calculated with the "order cart".
 
 ### orderCart
-```
+```typescript
 orderCart: <
   S extends CartItem,
   I extends S & Total,
@@ -47,8 +47,9 @@ So, with the `orderCart` initialized by the order, we have 3 functions easy to u
 `invoice()`, `refund()` and `cancel()` - to create the "sales document".
 
 ### Read more
-- [README home](../readme.md)
+- [README home](../README.md)
 - [Order model](./sales.pdf)
+- [Interfaces](./interfaces.md)
 - [Business scenarios](./sales/business.md)
 - [Basics](./basics.md) (low-order functions)
 - [Documents](./documents.md)
