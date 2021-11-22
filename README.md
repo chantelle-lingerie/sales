@@ -1,6 +1,7 @@
 # Sales calculations
 [![NPM version](https://img.shields.io/npm/v/@chantelle/sales.svg)](https://www.npmjs.com/package/@chantelle/sales)
-[![~Build Status](https://travis-ci.com/chantelle-lingerie/sales.svg?branch=master)](https://www.travis-ci.com/github/chantelle-lingerie/sales)
+[![Build Status](https://travis-ci.com/chantelle-lingerie/sales.svg?branch=master)](https://www.travis-ci.com/github/chantelle-lingerie/sales)
+[![Code Coverage](https://codecov.io/gh/chantelle-lingerie/sales/branch/master/graph/badge.svg?token=CNUSZVDIUI)](https://app.codecov.io/gh/chantelle-lingerie/sales)
 
 Manage order calculations based on invoices, refunds, cancellations
 
