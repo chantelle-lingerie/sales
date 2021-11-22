@@ -52,7 +52,7 @@ takeItem: (ntp: {up: NumberToPrice, down: NumberToPrice})
 
 takeItems: (injectable: {
     up: NumberToPrice,
-    down: berToPrice,
+    down: NumberToPrice,
     reduce: ItemReduce })
 
 spreadAdjustment: (ntp: NumberToPrice)
