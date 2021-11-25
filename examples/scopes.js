@@ -1,3 +1,4 @@
+"use strict"
 const { order } = require('../build/index')
 
 const theOrder = {
@@ -5,10 +6,18 @@ const theOrder = {
     shipping: 4,
     items: [{ id: 'a', price: 4, total: 16, qty: 4 }],
     invoiced: [
-        { items: [{ id: 'a', price: 4, total: 5, qty: 1 }], shipping: 1, total: 3 },
-        { items: [{ id: 'a', price: 4, total: 2, qty: 1 }], shipping: 1, total: 5 }],
-    refunded: [{ items: [{ id: 'a', price: 4, total: 3, qty: 1 }], shipping: 1, total: 4 }],
-    canceled: [{ items: [{ id: 'a', price: 4, total: 4, qty: 1 }], shipping: 1, total: 3 }] }
+        { items: [{ id: 'a', price: 4, total: 5, qty: 1 }],
+            shipping: 1,
+            total: 3 },
+        { items: [{ id: 'a', price: 4, total: 2, qty: 1 }],
+            shipping: 1,
+            total: 5 }],
+    refunded: [{ items: [{ id: 'a', price: 4, total: 3, qty: 1 }],
+        shipping: 1,
+        total: 4 }],
+    canceled: [{ items: [{ id: 'a', price: 4, total: 4, qty: 1 }],
+        shipping: 1,
+        total: 3 }] }
 
 // Invoiced and not refunded amount, items, shipping
 console.log(

@@ -1,12 +1,19 @@
+"use strict"
 const { invariants } = require('../build/index')
 
 const theOrder = {
     total: 10,
     shipping: 4,
     items: [{ id: 'a', price: 4, total: 10, qty: 4 }],
-    invoiced: [{ items: [{ id: 'a', price: 4, total: 8, qty: 2 }], shipping: 2, total: 5 }],
-    refunded: [{ items: [{ id: 'a', price: 4, total: 9, qty: 3 }], shipping: 3, total: 6 }],
-    canceled: [{ items: [{ id: 'a', price: 4, total: 5, qty: 3 }], shipping: 3, total: 7 }] }
+    invoiced: [{ items: [{ id: 'a', price: 4, total: 8, qty: 2 }],
+        shipping: 2,
+        total: 5 }],
+    refunded: [{ items: [{ id: 'a', price: 4, total: 9, qty: 3 }],
+        shipping: 3,
+        total: 6 }],
+    canceled: [{ items: [{ id: 'a', price: 4, total: 5, qty: 3 }],
+        shipping: 3,
+        total: 7 }] }
 
 // Refunded amount more than invoiced
 console.log(invariants.total(theOrder).ir)

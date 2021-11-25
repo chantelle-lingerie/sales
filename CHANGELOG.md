@@ -1,3 +1,9 @@
+2.0.4
+=============
+* Add codecov integration
+* Fix documentation
+* Fix typos
+
 2.0.3
 =============
 * Documentation

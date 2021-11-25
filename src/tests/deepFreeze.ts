@@ -1,5 +1,5 @@
 export function deepFreeze<T>(obj: T) {
-    var propNames = Object.getOwnPropertyNames(obj);
+    const propNames = Object.getOwnPropertyNames(obj);
     for (let name of propNames) {
         let value = (obj as any)[name];
         if (value && typeof value === "object") {

@@ -1,4 +1,8 @@
 # Sales calculations
+[![NPM version](https://img.shields.io/npm/v/@chantelle/sales.svg)](https://www.npmjs.com/package/@chantelle/sales)
+[![Build Status](https://travis-ci.com/chantelle-lingerie/sales.svg?branch=master)](https://www.travis-ci.com/github/chantelle-lingerie/sales)
+[![Code Coverage](https://codecov.io/gh/chantelle-lingerie/sales/branch/master/graph/badge.svg?token=CNUSZVDIUI)](https://app.codecov.io/gh/chantelle-lingerie/sales)
+
 Manage order calculations based on invoices, refunds, cancellations
 
 See full documentation [on GitHub](https://github.com/chantelle-lingerie/sales)
@@ -7,7 +11,6 @@ See full documentation [on GitHub](https://github.com/chantelle-lingerie/sales)
 * [fully immutable calculations](./doc/interfaces.md#Immutability) (pure functions)
 * 100% unit-tests coverage
 
-[![~Build Status](https://travis-ci.com/chantelle-lingerie/sales.svg?branch=master)](https://travis-ci.com/chantelle-lingerie/sales)
 
 ## Motivation
 
@@ -44,7 +47,7 @@ const theOrder = {
     refunded: [],
     canceled: [] }
 
-console.log(divideTotal(theOrder.items[0]).map(({total}) => total))
+console.log(divideTotal(theOrder.items[0]).map(({ total }) => total))
 // [ 3.33, 3.34, 3.33 ]
 ```
 
@@ -102,10 +105,18 @@ const theOrder = {
     shipping: 4,
     items: [{ id: 'a', price: 4, total: 16, qty: 4 }],
     invoiced: [
-        { items: [{ id: 'a', price: 4, total: 5, qty: 1 }], shipping: 1, total: 3 },
-        { items: [{ id: 'a', price: 4, total: 2, qty: 1 }], shipping: 1, total: 5 }],
-    refunded: [{ items: [{ id: 'a', price: 4, total: 3, qty: 1 }], shipping: 1, total: 4 }],
-    canceled: [{ items: [{ id: 'a', price: 4, total: 4, qty: 1 }], shipping: 1, total: 3 }] }
+        { items: [{ id: 'a', price: 4, total: 5, qty: 1 }],
+            shipping: 1,
+            total: 3 },
+        { items: [{ id: 'a', price: 4, total: 2, qty: 1 }],
+            shipping: 1,
+            total: 5 }],
+    refunded: [{ items: [{ id: 'a', price: 4, total: 3, qty: 1 }],
+        shipping: 1,
+        total: 4 }],
+    canceled: [{ items: [{ id: 'a', price: 4, total: 4, qty: 1 }],
+        shipping: 1,
+        total: 3 }] }
 ```
 
 The current income for this order is 4€. In the scope of this income 1 item with 4€ total. Shipping costs income is 1€:
@@ -155,6 +166,21 @@ Imagine, we have the order:
 - Order has 1 cancellation:
   - Canceled total amount 7€, canceled shipping amount 3€, items canceled:
     - item `a`: quantity 3, total price 7€ (item price 4€)
+```javascript
+const theOrder = {
+    total: 10,
+    shipping: 4,
+    items: [{ id: 'a', price: 4, total: 10, qty: 4 }],
+    invoiced: [{ items: [{ id: 'a', price: 4, total: 8, qty: 2 }],
+        shipping: 2,
+        total: 5 }],
+    refunded: [{ items: [{ id: 'a', price: 4, total: 9, qty: 3 }],
+        shipping: 3,
+        total: 6 }],
+    canceled: [{ items: [{ id: 'a', price: 4, total: 5, qty: 3 }],
+        shipping: 3,
+        total: 7 }] }
+```
 
 What is wrong with this order? The library has functions to check invariants:
 - You can't refund more than invoiced (items, shipping, amount)
@@ -200,9 +226,11 @@ For correct order data, all above values should be non-negative. Functions in th
 Assume we have the promotion: every 3rd **cheapest** item discounted - reduce product price to 1€. The next function implements this promo calculation:
 ```javascript
 const discountEvery3rdItem = cart => {
-    const sorted = [...cart.items].sort(({ price: a }, { price: b }) => a - b)
+    const sorted = [...cart.items]
+        .sort(({ price: a }, { price: b }) => a - b)
     const result = {
-        c: Math.floor(cart.items.reduce((acc, { qty }) => acc + qty, 0) / 3),
+        c: Math.floor(cart.items
+            .reduce((acc, { qty }) => acc + qty, 0) / 3),
         items: [] }
     for (const item of sorted) {
         if (result.c <= 0) {
@@ -231,11 +259,15 @@ Let's have some simple checks:
 - We order 6 items - 2 cheapest items discounted. For example, items prices are 5€, 5€, 5€, 4€, 4€ and 4€ - we have total amount 21€ (5€ + 5€ + 5€ + 4€ + 1€ + 1€)
 ```javascript
 // 1 item - no promo
-console.log(discountEvery3rdItem({ shipping: 0, items: [{ id: 'a', qty: 1, price: 5 }] }).total)
+console.log(discountEvery3rdItem({
+    shipping: 0,
+    items: [{ id: 'a', qty: 1, price: 5 }] }).total)
 // 5
 
 // 2 items - no promo
-console.log(discountEvery3rdItem({ shipping: 0, items: [{ id: 'a', qty: 2, price: 5 }] }).total)
+console.log(discountEvery3rdItem({
+    shipping: 0,
+    items: [{ id: 'a', qty: 2, price: 5 }] }).total)
 // 10
 console.log(discountEvery3rdItem({ shipping: 0, items: [
     { id: 'a', qty: 1, price: 5 },
@@ -243,7 +275,9 @@ console.log(discountEvery3rdItem({ shipping: 0, items: [
 // 11
 
 // 3 items - cheapest item discounted
-console.log(discountEvery3rdItem({ shipping: 0, items: [{ id: 'a', qty: 3, price: 5 }] }).total)
+console.log(discountEvery3rdItem({
+    shipping: 0,
+    items: [{ id: 'a', qty: 3, price: 5 }] }).total)
 // 11
 console.log(discountEvery3rdItem({ shipping: 0, items: [
     { id: 'a', qty: 1, price: 5 },
@@ -256,7 +290,9 @@ console.log(discountEvery3rdItem({ shipping: 0, items: [
 // 12
 
 // 6 items - 2 cheapest items discounted
-console.log(discountEvery3rdItem({ shipping: 0, items: [{ id: 'a', qty: 6, price: 5 }] }).total)
+console.log(discountEvery3rdItem({
+    shipping: 0,
+    items: [{ id: 'a', qty: 6, price: 5 }] }).total)
 // 22
 console.log(discountEvery3rdItem({ shipping: 0, items: [
     { id: 'a', qty: 1, price: 5 },
@@ -267,7 +303,7 @@ console.log(discountEvery3rdItem({ shipping: 0, items: [
 
 Potentially, your promo calculations could be based on your own systems, even use the database or call 3rd-party API to know applied promotions and total costs. Simply write cart calculation adapter to the library interfaces (similar to `discountEvery3rdItem`) - after this you will be able to calculate costs for invoices, refunds and cancellations.
 
-Let's create an order with promotion applied, cheapest item discounted and we have 1€ total costs for that item:
+Let's create an order with promotion applied, the cheapest item discounted, and we have 1€ total costs for that item:
 ```javascript
 const theOrder = discountEvery3rdItem({ shipping: 0, items: [
     { id: 'a', qty: 1, price: 4 },
@@ -292,16 +328,19 @@ We have 3€ discount on item `a` in this order. We can see how totals are calcu
 How should we calculate if we cancel item `b`? In this case, promotion would not be applicable anymore. So, we can keep the fee for promotion cancellation and cancel only 2€ (5€ - 3€). First, we request the "cancellation cart" from the library:
 ```javascript
 const cartForCancelation = order.total(theOrder)
-    .cancel({ shipping: 0, items: [{ id: 'b', qty: 1, price: 5 }] })
+    .cancel({ shipping: 0,
+        items: [{ id: 'b', qty: 1, price: 5 }] })
 console.log(cartForCancelation)
 ```
 
 Here library gives you cart items (and shipping) for your cart calculations. As mentioned above, you can use the database or call 3rd-party API, async functions, etc. When you calculate all totals for the given cart - proceed by calling `total`, pass the totals you have calculated. Let's see, if we use our `discountEvery3rdItem` here:
 ```javascript
 // your calculations here - could be async
-const cartForCancelationWithTotals = discountEvery3rdItem(cartForCancelation)
+const cartForCancelationWithTotals =
+    discountEvery3rdItem(cartForCancelation)
 // end of your calculations, proceed with the library
-const cancelDocument = cartForCancelation.total(cartForCancelationWithTotals)
+const cancelDocument = cartForCancelation
+    .total(cartForCancelationWithTotals)
 console.log(cancelDocument)
 theOrder.canceled.push(cancelDocument)
 ```
@@ -316,9 +355,10 @@ Here we can see the difference. Even the cancellation amount for the item is 5�
 
 Now the same way let's invoice items `a` and `c` - request "invoice cart" from the library, use `discountEvery3rdItem` to calculate totals for the "invoice cart" and then proceed by calling `total` to receive the invoice document:
 ```javascript
-const cartForInvoice = order.total(theOrder).invoice({ shipping: 0, items: [
-    { id: 'a', qty: 1, price: 4 },
-    { id: 'c', qty: 1, price: 6 }] })
+const cartForInvoice = order.total(theOrder)
+    .invoice({ shipping: 0, items: [
+        { id: 'a', qty: 1, price: 4 },
+        { id: 'c', qty: 1, price: 6 }] })
 // your calculations here - could be async
 const cartForInvoiceWithTotals = discountEvery3rdItem(cartForInvoice)
 // end of your calculations, proceed with the library
@@ -337,7 +377,7 @@ Again, we can see this difference here. Even we invoiced only 1€ for item `a`,
 
 The same will happen when you refund invoiced items. For more use-cases you can read at [business scenarios](./doc/sales/business.md). For more details read other parts of the documentation. For visual diagrams and calculation formulas you can check [Order model](./doc/sales.pdf)
 
-[![Order model](https://github.com/chantelle-lingerie/sales/raw/97e520fc923581436dbbf2dc6b6ab06dab0210e7/doc/order.png)](./doc/sales.pdf)
+[![Order model](https://github.com/chantelle-lingerie/sales/raw/master/doc/order.png)](./doc/sales.pdf)
 
 ## Sales API
 For all documented functions you can also check the unit-tests to see the usage examples (100% coverage).
