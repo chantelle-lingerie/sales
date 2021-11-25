@@ -33,7 +33,7 @@ const discountEvery3rdItem = cart => {
         shipping: 0,
         items: [{ id: 'a', qty: 1, price: 5 }] }).total)
     // 5
-    
+
     // 2 items - no promo
     console.log(discountEvery3rdItem({
         shipping: 0,
@@ -43,7 +43,7 @@ const discountEvery3rdItem = cart => {
         { id: 'a', qty: 1, price: 5 },
         { id: 'b', qty: 1, price: 6 }] }).total)
     // 11
-    
+
     // 3 items - cheapest item discounted
     console.log(discountEvery3rdItem({
         shipping: 0,
@@ -58,7 +58,7 @@ const discountEvery3rdItem = cart => {
         { id: 'a', qty: 2, price: 5 },
         { id: 'c', qty: 1, price: 6 }] }).total)
     // 12
-    
+
     // 6 items - 2 cheapest items discounted
     console.log(discountEvery3rdItem({
         shipping: 0,
@@ -77,12 +77,12 @@ const discountEvery3rdItem = cart => {
         { id: 'b', qty: 1, price: 5 },
         { id: 'c', qty: 1, price: 6 }] })
     console.log(theOrder)
-    
+
     // prepare order object for sales calculations
     theOrder.invoiced = []
     theOrder.refunded = []
     theOrder.canceled = []
-    
+
     const cartForCancelation = order.total(theOrder)
         .cancel({ shipping: 0,
             items: [{ id: 'b', qty: 1, price: 5 }] })

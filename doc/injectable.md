@@ -6,7 +6,7 @@ based on your own rounding function.
 Just import `injectable`, where you have the same set of all functions
 (starting from addPrices till the order functions and cart functions)
 
-Simpliest example is:
+Simplest example is:
 `const minusPrice = (ntp: NumberToPrice) => (a: number, b: number) => ntp(a - b)`.
 Here you can see the contract of rounding:
 `type NumberToPrice = (input: number) => number`.

@@ -11,12 +11,12 @@ describe('Shipping discount', () => {
             return { ...cart_, shipping, total }
         }
 
-        const disountRule = scenario(promotionTotals)
+        const discountRule = scenario(promotionTotals)
 
         const items = [
             { id: 'a', price: 9, qty: 1 },
             { id: 'b', price: 9, qty: 2 }]
-        const { result: order, invoice: firstInvoiceCallback, cancel: firstCancelCallback, spreading: initialSpreading } = disountRule({ shipping: 2.71, items })
+        const { result: order, invoice: firstInvoiceCallback, cancel: firstCancelCallback, spreading: initialSpreading } = discountRule({ shipping: 2.71, items })
         it('Correct order', () => {
             checkDocument(order, { shipping: 0, total: 27 })
         })

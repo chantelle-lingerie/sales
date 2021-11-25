@@ -117,7 +117,7 @@ describe('2 + 1: every 3rd cheapest product discounted', () => {
             const refundData = { shipping: 0, items: [{ id: 'a', qty: 1, price: 10 }] }
 
             it('Promotional calculations', () => {
-                // same item: can have the first inovice higher as it is without promotion
+                // same item: can have the first invoice higher as it is without promotion
                 const firstInvoiceExpectations = { shipping: 2.71, total: 22.71, items: [
                     { id: 'a', price: 10, qty: 2, total: 20 }] }
                 const secondInvoiceExpectations = { shipping: 0, total: 1, items: [

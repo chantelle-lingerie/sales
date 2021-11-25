@@ -303,7 +303,7 @@ console.log(discountEvery3rdItem({ shipping: 0, items: [
 
 Potentially, your promo calculations could be based on your own systems, even use the database or call 3rd-party API to know applied promotions and total costs. Simply write cart calculation adapter to the library interfaces (similar to `discountEvery3rdItem`) - after this you will be able to calculate costs for invoices, refunds and cancellations.
 
-Let's create an order with promotion applied, cheapest item discounted and we have 1€ total costs for that item:
+Let's create an order with promotion applied, the cheapest item discounted, and we have 1€ total costs for that item:
 ```javascript
 const theOrder = discountEvery3rdItem({ shipping: 0, items: [
     { id: 'a', qty: 1, price: 4 },

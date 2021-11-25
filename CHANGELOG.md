@@ -2,7 +2,7 @@
 =============
 * Add codecov integration
 * Fix documentation
-* Style fixes
+* Fix typos
 
 2.0.3
 =============

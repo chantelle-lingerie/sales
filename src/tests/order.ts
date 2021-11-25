@@ -1,4 +1,4 @@
-import { cart as _,Items, ItemTotal, ItemQty, Shipping, Total, Order, Price } from '../index'
+import { Items, ItemTotal, ItemQty, Shipping, Total, Order, Price } from '../index'
 
 export const order: Order<Total & Shipping & Items<ItemTotal & ItemQty & Price>> = {
     shipping: 2.71,
