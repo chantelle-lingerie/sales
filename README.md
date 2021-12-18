@@ -8,7 +8,7 @@ Manage order calculations based on invoices, refunds, cancellations
 See full documentation [on GitHub](https://github.com/chantelle-lingerie/sales)
 
 * zero production dependencies (only dev dependencies)
-* [fully immutable calculations](./doc/interfaces.md#Immutability) (pure functions)
+* [fully immutable calculations](./doc/interfaces.md#immutability) (pure functions)
 * 100% unit-tests coverage
 
 
@@ -21,7 +21,7 @@ In case of refunds and cancellations, this library is able to cancel (re-calcula
 
 Many implementations [have](https://community.shopify.com/c/Shopify-Design/Problem-with-rounding-prices/td-p/416162) [rounding](https://magento.stackexchange.com/questions/225168/magento1-9-paypal-rounding-amount-issue) [issues](https://github.com/woocommerce/woocommerce/issues/14458) on calculations and do not give flexibility to cancel promotions.
 
-By introducing the [Order model](./doc/sales.pdf) this library covers [business scenarios](./doc/sales/business.md) with promotions cancellation in sales documents.
+By introducing the [Order model](./doc/model.md) this library covers [business scenarios](./doc/sales/business.md) with promotions cancellation in sales documents.
 
 Enjoy using it without having any number rounding issues :tada:
 
@@ -375,15 +375,15 @@ Here we have our invoice document calculated:
 
 Again, we can see this difference here. Even we invoiced only 1€ for item `a`, we have invoice total amount of 10€, because it includes the fee. You can inform customer, that this happened because of promotion cancellation.
 
-The same will happen when you refund invoiced items. For more use-cases you can read at [business scenarios](./doc/sales/business.md). For more details read other parts of the documentation. For visual diagrams and calculation formulas you can check [Order model](./doc/sales.pdf)
+The same will happen when you refund invoiced items. For more use-cases you can read at [business scenarios](./doc/sales/business.md). For more details read other parts of the documentation. For visual diagrams and calculation formulas you can check [Order model](./doc/model.md)
 
-[![Order model](https://github.com/chantelle-lingerie/sales/raw/master/doc/order.png)](./doc/sales.pdf)
+[![Order model](https://github.com/chantelle-lingerie/sales/raw/master/doc/order.png)](./doc/model.md)
 
 ## Sales API
 For all documented functions you can also check the unit-tests to see the usage examples (100% coverage).
 All interfaces are extendable in functions, so you can use more specific types in your applications.
 
-- [Order model](./doc/sales.pdf)
+- [Order model](./doc/model.md)
 - [Interfaces](./doc/interfaces.md)
 - [Business scenarios](./doc/sales/business.md)
 - [Basics](./doc/basics.md) (low-order functions)

@@ -1,7 +1,7 @@
 ## Invariants
 List of functions in this API grouped by `invariants` object:
 `export const invariants = { ... }`.
-To understand the invariants the [Order model](./sales.pdf) (page 1, 4) should be understood first:
+To understand the invariants the [Order model](./model.md) should be understood first:
 
 - **CI** - stands for **not canceled** and **not invoiced** part of the order (`CI >= 0`)
 - **IR** - stands for **invoiced** and **not refunded** part of the order (`IR >= 0`)
@@ -10,7 +10,7 @@ Use these functions to check the invariants for sales calculations.
 If you use sales ([order](./order.md)) functions without checking invariants,
 **the correct result not guaranteed**.
 
-Negative values correspond to the "missing" amount/quantity in the [Order model](./sales.pdf) state.
+Negative values correspond to the "missing" amount/quantity in the [Order model](./model.md) state.
 
 ### invariants.total
 ```typescript
@@ -83,7 +83,7 @@ use `order.sales` from the [order API](./order.md)
 
 ### Read more
 - [README home](../README.md)
-- [Order model](./sales.pdf)
+- [Order model](./model.md)
 - [Interfaces](./interfaces.md)
 - [Business scenarios](./sales/business.md)
 - [Basics](./basics.md) (low-order functions)

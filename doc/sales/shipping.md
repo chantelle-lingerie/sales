@@ -42,7 +42,7 @@ than it was in the order.
 
 ### Read more
 - [README home](../../README.md)
-- [Order model](../sales.pdf)
+- [Order model](../model.md)
 - [Interfaces](../interfaces.md)
 - [Basics](../basics.md) (low-order functions)
 - [Documents](../documents.md)

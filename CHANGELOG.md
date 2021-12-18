@@ -1,3 +1,7 @@
+2.0.5
+=============
+* Order model documentation
+
 2.0.4
 =============
 * Add codecov integration
