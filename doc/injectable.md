@@ -144,7 +144,7 @@ orderCart: (injectable: {
 
 ### Read more
 - [README home](../README.md)
-- [Order model](./sales.pdf)
+- [Order model](./model.md)
 - [Interfaces](./interfaces.md)
 - [Business scenarios](./sales/business.md)
 - [Basics](./basics.md) (low-order functions)

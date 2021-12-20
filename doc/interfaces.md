@@ -62,7 +62,7 @@ type Order<T extends Total | Shipping | Items<Item>> = T & {
     canceled: T[],
 }
 ```
-This interface represents the main model of the library - the [Order model](./sales.pdf).
+This interface represents the main model of the library - the [Order model](./model.md).
 The order could be defined in several scopes (or all of them at the same time):
 
 - `Total`
@@ -101,7 +101,7 @@ The immutability in tests is proved by `deepFreeze` (which is based on `Object.f
 
 ### Read more
 - [README home](../README.md)
-- [Order model](./sales.pdf)
+- [Order model](./model.md)
 - [Business scenarios](./sales/business.md)
 - [Basics](./basics.md) (low-order functions)
 - [Documents](./documents.md)

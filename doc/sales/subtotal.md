@@ -63,7 +63,7 @@ the refund amount should be <span style="color:green">**7€**</span>
 
 ### Read more
 - [README home](../../README.md)
-- [Order model](../sales.pdf)
+- [Order model](../model.md)
 - [Interfaces](../interfaces.md)
 - [Basics](../basics.md) (low-order functions)
 - [Documents](../documents.md)

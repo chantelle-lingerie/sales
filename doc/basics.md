@@ -154,7 +154,7 @@ This is the highest-order function in Basics.
 
 ### Read more
 - [README home](../README.md)
-- [Order model](./sales.pdf)
+- [Order model](./model.md)
 - [Interfaces](./interfaces.md)
 - [Business scenarios](./sales/business.md)
 - [Documents](./documents.md)

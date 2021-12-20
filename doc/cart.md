@@ -1,5 +1,5 @@
 ## Cart
-The Cart (in the scope of order) described in the [Order model](./sales.pdf) (page 2-3).
+The Cart (in the scope of order) described in the [Order model](./model.md#the-cart).
 The cart should be able to calculate `total`s for each item and the cart `total`.
 Two cart implementations provided in the `cart` object.
 
@@ -23,7 +23,7 @@ order: <
 ```
 This cart uses the order information (related to the cart).
 First, we should give the current order state,
-then the cart proportionally adjusts cart `total` based on subtotal values (see the [Order model](./sales.pdf), page 2-3).
+then the cart proportionally adjusts cart `total` based on subtotal values (see the [Order model](./model.md#the-cart)).
 
 Both implementations are synchronous pure functions.
 In this case, sales calculation could be done synchronously and without side effects.
@@ -48,7 +48,7 @@ So, with the `orderCart` initialized by the order, we have 3 functions easy to u
 
 ### Read more
 - [README home](../README.md)
-- [Order model](./sales.pdf)
+- [Order model](./model.md)
 - [Interfaces](./interfaces.md)
 - [Business scenarios](./sales/business.md)
 - [Basics](./basics.md) (low-order functions)

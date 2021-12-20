@@ -2,7 +2,7 @@
 List of functions in this API grouped by `order` object:
 `export const order = { ... }`.
 The core functions to do the **sales calculations**.
-Slicing your order in different contexts (shipping, total, items - see [Order model](./sales.pdf), page 4),
+Slicing your order in different contexts (shipping, total, items - see [Order model](./model.md#interface-segregation)),
 gives you the way to calculate proper values for each context in the requested
 `invoice`, `refund`, or `cancel` operation (let's call it just **sales operation**).
 
@@ -19,7 +19,7 @@ shipping: <
 ```
 Here you can get (future) values for shipping invariants
 (see [Invariants](./invariants.md)) after the "sales operation".
-The information is static - does not require a [Cart model](./cart.md).
+The information is static - does not require a [cart calculations](./cart.md).
 
 ### order.itemsQty
 ```typescript
@@ -35,7 +35,7 @@ itemsQty: <
 ```
 Here you can get (future) values for items quantity invariants
 (see [Invariants](./invariants.md)) after the "sales operation".
-The information is static - does not require a [Cart model](./cart.md).
+The information is static - does not require a [cart calculations](./cart.md).
 
 ### order.sales.shipping
 ```typescript
@@ -74,7 +74,7 @@ Grouped by each item `id`.
 
 ### order.total
 This function designed to calculate the final costs (for items and the "sales operation" `total` costs)
-based on the provided [Cart model](./cart.md).
+based on the provided [Cart model](./model.md#the-cart).
 This is the main, the most high-order function in the library.
 ```typescript
 total: <
@@ -113,7 +113,7 @@ After this you have 3 "sales operations", each of them has the same interface:
     >(cart: V) => D & Total & Items<U>
   };
 ```
-Each operation receives the `request` first, and calculates **the cart** according to the [model](./sales.pdf) (page 2-3).
+Each operation receives the `request` first, and calculates **the cart** according to the [model](./model.md#the-cart).
 You receive your request enriched by new `shipping` costs (available by the **Order model**),
 items - `qty` and `total` (available by the **Order model**) and the `total()` function.
 Once you calculated the cart `total`s based on the given `shipping` and `items` (see [Carts examples](./cart.md)),
@@ -127,7 +127,7 @@ and also prove the [business cases](./sales/business.md) for custom cart calcula
 
 ### Read more
 - [README home](../README.md)
-- [Order model](./sales.pdf)
+- [Order model](./model.md)
 - [Business scenarios](./sales/business.md)
 - [Basics](./basics.md) (low-order functions)
 - [Documents](./documents.md)

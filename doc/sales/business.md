@@ -40,13 +40,13 @@ means the cart knows how to cancel promotion.
 The information about promotion conditions is lost after the order is placed.
 The best what we can do (compromise) - spread the discount between sales documents.
 
-For more information see the [Order model](../sales.pdf) diagrams.
+For more information see the [Order model](../model.md) diagrams.
 
-[![Order model](../order.png)](../sales.pdf)
+[![Order model](../order.png)](../model.md)
 
 ### Read more
 - [README home](../../README.md)
-- [Order model](../sales.pdf)
+- [Order model](../model.md)
 - [Interfaces](../interfaces.md)
 - [Basics](../basics.md) (low-order functions)
 - [Documents](../documents.md)
