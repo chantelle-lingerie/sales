@@ -23,16 +23,16 @@ than it was in the order.
 - **Total:** 27€
 
 **Cancel one item B:**
-- ![#d70308](https://via.placeholder.com/15/d70308/000000?text=+) **Bad calculation:** <span style="color:red">**nonzero**</span> shipping amount
-- ![#008118](https://via.placeholder.com/15/008118/000000?text=+) **Good calculation:** shipping amount <span style="color:green">**forced to be zero**</span>
+- ![#d70308](https://via.placeholder.com/15/d70308/000000.png?text=+) **Bad calculation:** <span style="color:red">**nonzero**</span> shipping amount
+- ![#008118](https://via.placeholder.com/15/008118/000000.png?text=+) **Good calculation:** shipping amount <span style="color:green">**forced to be zero**</span>
 
 **Invoice one item B and item A:**
-- ![#d70308](https://via.placeholder.com/15/d70308/000000?text=+) **Bad calculation:** <span style="color:red">**nonzero**</span> shipping amount
-- ![#008118](https://via.placeholder.com/15/008118/000000?text=+) **Good calculation:** shipping amount <span style="color:green">**forced to be zero**</span>
+- ![#d70308](https://via.placeholder.com/15/d70308/000000.png?text=+) **Bad calculation:** <span style="color:red">**nonzero**</span> shipping amount
+- ![#008118](https://via.placeholder.com/15/008118/000000.png?text=+) **Good calculation:** shipping amount <span style="color:green">**forced to be zero**</span>
 
 **Refund invoiced item A:**
-- ![#d70308](https://via.placeholder.com/15/d70308/000000?text=+) **Bad calculation:** <span style="color:red">**nonzero**</span> shipping amount
-- ![#008118](https://via.placeholder.com/15/008118/000000?text=+) **Good calculation:** shipping amount <span style="color:green">**forced to be zero**</span>
+- ![#d70308](https://via.placeholder.com/15/d70308/000000.png?text=+) **Bad calculation:** <span style="color:red">**nonzero**</span> shipping amount
+- ![#008118](https://via.placeholder.com/15/008118/000000.png?text=+) **Good calculation:** shipping amount <span style="color:green">**forced to be zero**</span>
 
 **Note:** Both spreading and promotional calculation following this business rule.
 

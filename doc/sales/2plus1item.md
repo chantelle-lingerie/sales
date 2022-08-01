@@ -22,7 +22,7 @@ Every 3rd **cheapest** item discounted - reduce product price to 1€
 - **Shipping:** 2.71€
 - **Total:** 23.71€ = 21€ + 2.71€
 
-### ![#d70308](https://via.placeholder.com/15/d70308/000000?text=+) <span style="color:red">Bad calculation</span>
+### ![#d70308](https://via.placeholder.com/15/d70308/000000.png?text=+) <span style="color:red">Bad calculation</span>
 - **Cancel item C:** cancellation amount is <span style="color:red">**10€**</span>
 - **Invoice item A and item B:**
   - Not possible to invoice **17.71€** (5€ + 10€ + 2.71€) after the previous cancellation
@@ -36,7 +36,7 @@ Every 3rd **cheapest** item discounted - reduce product price to 1€
 **Note:** Spreading calculation will do <span style="color:red">**bad calculations**</span>,
 because we can't spread one item discount with different items.
 
-### ![#008118](https://via.placeholder.com/15/008118/000000?text=+) <span style="color:green">**Promotional calculation**</span>
+### ![#008118](https://via.placeholder.com/15/008118/000000.png?text=+) <span style="color:green">**Promotional calculation**</span>
 - **Cancel item C:** cancellation amount is <span style="color:green">**6€**</span> = 10€ - 4€ (cancelled promotion)
 - **Invoice item A and item B:** invoice amount is <span style="color:green">**17.71€**</span> = 5€ + 10€ + 2.71€
 - **Refund invoiced item A:** refunded amount is <span style="color:green">**5€**</span> (as promotion was cancelled on first step)
@@ -59,7 +59,7 @@ the refund amount should be <span style="color:green">**6€**</span>
 - **Shipping:** 2.71€
 - **Total:** 23.71€ = 21€ + 2.71€
 
-### ![#d70308](https://via.placeholder.com/15/d70308/000000?text=+) <span style="color:red">Bad calculation</span>
+### ![#d70308](https://via.placeholder.com/15/d70308/000000.png?text=+) <span style="color:red">Bad calculation</span>
 - **Cancel one item A:** cancellation amount is <span style="color:red">**10€**</span>
 - **Invoice two items A:**
   - Not possible to invoice **22.71€** (2 * 10€ + 2.71€) after the previous cancellation
@@ -70,7 +70,7 @@ the refund amount should be <span style="color:green">**6€**</span>
 
 **Balance:** <span style="color:red">**3.71€**</span> = 23.71€ - 10€ - 10€ = 1€ + 2.71€ (reduced item price)
 
-### ![#fba321](https://via.placeholder.com/15/fba321/000000?text=+) <span style="color:orange">**Spreading discount calculation**</span>
+### ![#fba321](https://via.placeholder.com/15/fba321/000000.png?text=+) <span style="color:orange">**Spreading discount calculation**</span>
 As we have the same item, one third of the item discount (9€ / 3) connected to each item unit.
 As a result each item considered as discounted: 10€ - 9/3€ = **7€**
 - **Cancel one item A:** cancellation amount is <span style="color:orange">**7€**</span>
@@ -85,7 +85,7 @@ As a result each item considered as discounted: 10€ - 9/3€ = **7€**
 **Balance:** <span style="color:orange">**9.71€**</span> = 23.71€ - 7€ - 7€ = 7€ + 2.71€ (equally reduced item price)
 
 
-### ![#008118](https://via.placeholder.com/15/008118/000000?text=+) <span style="color:green">**Promotional calculation**</span>
+### ![#008118](https://via.placeholder.com/15/008118/000000.png?text=+) <span style="color:green">**Promotional calculation**</span>
 - **Cancel one item A:** cancellation amount is <span style="color:green">**1€**</span> (cancelled promotion)
 - **Invoice two items A:** invoice amount is <span style="color:green">**22.71€**</span> = 2 * 10€ + 2.71€
 - **Refund invoiced item A:** refunded amount is <span style="color:green">**10€**</span> (as promotion was cancelled on first step)
