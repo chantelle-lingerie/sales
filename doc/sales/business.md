@@ -32,11 +32,11 @@ We can refund only what was invoiced. Potentially, we can do a lot of sales oper
 - [Discount on a specific item](./2plus1item.md)
 
 ### Definitions
-![#008118](https://via.placeholder.com/15/008118/000000?text=+) <span style="color:green">**Promotional calculation:**</span>
+![#008118](https://via.placeholder.com/15/008118/000000.png?text=+) <span style="color:green">**Promotional calculation:**</span>
 The cart knows how to recalculate promotion on subset of the order -
 means the cart knows how to cancel promotion.
 
-![#fba321](https://via.placeholder.com/15/fba321/000000?text=+) <span style="color:orange">**Spreading discount calculation:**</span>
+![#fba321](https://via.placeholder.com/15/fba321/000000.png?text=+) <span style="color:orange">**Spreading discount calculation:**</span>
 The information about promotion conditions is lost after the order is placed.
 The best what we can do (compromise) - spread the discount between sales documents.
 

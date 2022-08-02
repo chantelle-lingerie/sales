@@ -2,23 +2,23 @@
 The order model is used to calculate amounts for sales documents: invoices, refunds, cancellations. You will see below visual diagrams and calculation formulas that are used in the library.
 
 ### Definitions
-- ![#007fff](https://via.placeholder.com/15/007fff/000000?text=+) <span style="color:blue">**C**</span> - stands for cancellation-related terms (aka "void transaction")
+- ![#007fff](https://via.placeholder.com/15/007fff/000000.png?text=+) <span style="color:blue">**C**</span> - stands for cancellation-related terms (aka "void transaction")
 
-- ![#008118](https://via.placeholder.com/15/008118/000000?text=+) <span style="color:green">**I**</span> - stands for invoice-related terms (aka "capture transaction")
+- ![#008118](https://via.placeholder.com/15/008118/000000.png?text=+) <span style="color:green">**I**</span> - stands for invoice-related terms (aka "capture transaction")
 
-- ![#fba321](https://via.placeholder.com/15/fba321/000000?text=+) <span style="color:orange">**R**</span> - stands for refund-related terms ("refund transaction" aka "credit memo document")
+- ![#fba321](https://via.placeholder.com/15/fba321/000000.png?text=+) <span style="color:orange">**R**</span> - stands for refund-related terms ("refund transaction" aka "credit memo document")
 
 So, in general, an order can have all 3 types of documents at the same time, and it will look like on the image below:
 
 ![Order model](./order.png)
 
-- ![#007fff](https://via.placeholder.com/15/007fff/000000?text=+)![#008118](https://via.placeholder.com/15/008118/000000?text=+) <span style="color:blue">**C**</span><span style="color:green">**I**</span> - stands for __not cancelled__ and __not invoiced__ part of the order.
+- ![#007fff](https://via.placeholder.com/15/007fff/000000.png?text=+)![#008118](https://via.placeholder.com/15/008118/000000.png?text=+) <span style="color:blue">**C**</span><span style="color:green">**I**</span> - stands for __not cancelled__ and __not invoiced__ part of the order.
 From the model image we can see, that `CI = Order - C - I`
 
-- ![#008118](https://via.placeholder.com/15/008118/000000?text=+)![#fba321](https://via.placeholder.com/15/fba321/000000?text=+) <span style="color:green">**I**</span><span style="color:orange">**R**</span> - stands for __invoiced__ and __not refunded__ part of the order.
+- ![#008118](https://via.placeholder.com/15/008118/000000.png?text=+)![#fba321](https://via.placeholder.com/15/fba321/000000.png?text=+) <span style="color:green">**I**</span><span style="color:orange">**R**</span> - stands for __invoiced__ and __not refunded__ part of the order.
 From the model image we can see, that `IR = I - R`
 
-- ![#007fff](https://via.placeholder.com/15/007fff/000000?text=+)![#fba321](https://via.placeholder.com/15/fba321/000000?text=+) <span style="color:blue">**C**</span><span style="color:orange">**R**</span> - stands for __not cancelled__ and __not refunded__ part of the order.
+- ![#007fff](https://via.placeholder.com/15/007fff/000000.png?text=+)![#fba321](https://via.placeholder.com/15/fba321/000000.png?text=+) <span style="color:blue">**C**</span><span style="color:orange">**R**</span> - stands for __not cancelled__ and __not refunded__ part of the order.
 From the model image we can see, that `CR = Order - C - R = CI + IR`
 
 ### Invariants
@@ -30,9 +30,9 @@ You can invoice only the non-cancelled part of the order. For us it means:
 
 ## The Cart
 Assuming the current state of order, let's introduce sales operation:
-- ![#007fff](https://via.placeholder.com/15/007fff/000000?text=+) <span style="color:blue">**c**</span> - new cancellation
-- ![#008118](https://via.placeholder.com/15/008118/000000?text=+) <span style="color:green">**i**</span> - new invoice
-- ![#fba321](https://via.placeholder.com/15/fba321/000000?text=+) <span style="color:orange">**r**</span> - new refund
+- ![#007fff](https://via.placeholder.com/15/007fff/000000.png?text=+) <span style="color:blue">**c**</span> - new cancellation
+- ![#008118](https://via.placeholder.com/15/008118/000000.png?text=+) <span style="color:green">**i**</span> - new invoice
+- ![#fba321](https://via.placeholder.com/15/fba321/000000.png?text=+) <span style="color:orange">**r**</span> - new refund
 
 In this case, our order model will look like on the image below:
 
@@ -40,19 +40,19 @@ In this case, our order model will look like on the image below:
 
 Here the (expected) **Cart** will always be the part of **CR**. And for each operation we will define the Cart as next:
 
-### ![#008118](https://via.placeholder.com/15/008118/000000?text=+) New invoice
+### ![#008118](https://via.placeholder.com/15/008118/000000.png?text=+) New invoice
 Invariant: we can't invoice what was cancelled, which means `i ≤ CI`.
 The cart is defined as the accumulated invoices without existing refunds:
 `Cart = IR + i = CR - (CI - i)`.
 And in this case `Cart ≤ CR`, because of the above invariant `i ≤ CI`.
 
-### ![#007fff](https://via.placeholder.com/15/007fff/000000?text=+) New cancellation
+### ![#007fff](https://via.placeholder.com/15/007fff/000000.png?text=+) New cancellation
 Invariant: we can't cancel what was invoiced, which means `c ≤ CI`.
 The cart is defined as everything that wasn't cancelled or refunded:
 `Cart = CR - c = IR + (CI - c)`.
 And in this case `Cart ≥ IR`, because of the above invariant `c ≤ CI`.
 
-### ![#fba321](https://via.placeholder.com/15/fba321/000000?text=+) New refund
+### ![#fba321](https://via.placeholder.com/15/fba321/000000.png?text=+) New refund
 Invariant: we can't refund what was not invoiced, which means `r ≤ IR`.
 The cart is defined as everything that wasn't cancelled or refunded:
 `Cart = CR - r = CI + (IR - r)`.

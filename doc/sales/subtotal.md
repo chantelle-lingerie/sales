@@ -19,7 +19,7 @@ Starting from **20€** subtotal give the **2€** cart discount.
 - **Shipping:** 2.71€
 - **Total:** 27€ = 27€ + 2.71€ - 2€
 
-### ![#d70308](https://via.placeholder.com/15/d70308/000000?text=+) <span style="color:red">Bad calculation</span>
+### ![#d70308](https://via.placeholder.com/15/d70308/000000.png?text=+) <span style="color:red">Bad calculation</span>
 - **Cancel one item B:** cancellation amount is <span style="color:red">**9€**</span>
 - **Invoice one item B and item A:**
   - Not possible to invoice **20.71€** (9€ + 9€ + 2.71€) after the previous cancellation
@@ -30,7 +30,7 @@ Starting from **20€** subtotal give the **2€** cart discount.
 
 **Balance:** <span style="color:red">**9.71€**</span> = 27.71€ - 9€ - 9€ = 9€ + 2.71€ - 2€ (discount)
 
-### ![#fba321](https://via.placeholder.com/15/fba321/000000?text=+) <span style="color:orange">**Spreading discount calculation**</span>
+### ![#fba321](https://via.placeholder.com/15/fba321/000000.png?text=+) <span style="color:orange">**Spreading discount calculation**</span>
 One third of the cart discount (2€ / 3) connected to each item.
 As a result each item considered as discounted: 9€ - 2/3€ ~ **8.33€** (but one item should be 8.34€)
 - **Cancel one item B:** cancellation amount is <span style="color:orange">**8.33€**</span>
@@ -44,7 +44,7 @@ As a result each item considered as discounted: 9€ - 2/3€ ~ **8.33€** (but
 
 **Balance:** <span style="color:orange">**11.05€**</span> = 27.71€ - 8.33€ - 8.33€ = 9€ + 2.71€ - 2/3€ (discount)
 
-### ![#008118](https://via.placeholder.com/15/008118/000000?text=+) <span style="color:green">**Promotional calculation**</span>
+### ![#008118](https://via.placeholder.com/15/008118/000000.png?text=+) <span style="color:green">**Promotional calculation**</span>
 - **Cancel one item B:** cancellation amount is <span style="color:green">**7€**</span> = 9€ - 2€ (cancelled promotion)
 - **Invoice one item B and item A:** invoice amount is <span style="color:green">**20.71€**</span> = 9€ + 9€ + 2.71€
 - **Refund invoiced item A:** refunded amount is <span style="color:green">**9€**</span> (as promotion was cancelled on first step)
