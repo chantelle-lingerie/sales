@@ -12,13 +12,13 @@ So, in general, an order can have all 3 types of documents at the same time, and
 
 ![Order model](./order.png)
 
-- ![#007fff](https://via.placeholder.com/15/007fff/000000.png?text=+)![#008118](https://via.placeholder.com/15/008118/000000.png?text=+) <span style="color:blue">**C**</span><span style="color:green">**I**</span> - stands for __not cancelled__ and __not invoiced__ part of the order.
+- ![#007fff](https://via.placeholder.com/15/007fff/000000.png?text=+)![#008118](https://via.placeholder.com/15/008118/000000.png?text=+) <span style="color:blue">**C**</span><span style="color:green">**I**</span> - stands for __non-cancelled__ and __non-invoiced__ part of the order.
 From the model image we can see, that `CI = Order - C - I`
 
-- ![#008118](https://via.placeholder.com/15/008118/000000.png?text=+)![#fba321](https://via.placeholder.com/15/fba321/000000.png?text=+) <span style="color:green">**I**</span><span style="color:orange">**R**</span> - stands for __invoiced__ and __not refunded__ part of the order.
+- ![#008118](https://via.placeholder.com/15/008118/000000.png?text=+)![#fba321](https://via.placeholder.com/15/fba321/000000.png?text=+) <span style="color:green">**I**</span><span style="color:orange">**R**</span> - stands for __invoiced__ and __non-refunded__ part of the order.
 From the model image we can see, that `IR = I - R`
 
-- ![#007fff](https://via.placeholder.com/15/007fff/000000.png?text=+)![#fba321](https://via.placeholder.com/15/fba321/000000.png?text=+) <span style="color:blue">**C**</span><span style="color:orange">**R**</span> - stands for __not cancelled__ and __not refunded__ part of the order.
+- ![#007fff](https://via.placeholder.com/15/007fff/000000.png?text=+)![#fba321](https://via.placeholder.com/15/fba321/000000.png?text=+) <span style="color:blue">**C**</span><span style="color:orange">**R**</span> - stands for __non-cancelled__ and __non-refunded__ part of the order.
 From the model image we can see, that `CR = Order - C - R = CI + IR`
 
 ### Invariants

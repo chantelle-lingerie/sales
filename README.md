@@ -35,6 +35,8 @@ yarn: `yarn add @chantelle/sales`
 Disclaimer: Examples below are written without TypeScript for wide auditory.
 
 ### Three same items cost 10€ in total
+[//]: <> (Q: do you mean similarly priced or identical products?)
+[//]: <> (A: Could be similarly priced, but could be even identical - it does not affect below calculations)
 [Source](./examples/basic.js)
 
 Let's create this order and see how the library split 10€ into 3 same items:
@@ -77,13 +79,20 @@ console.log(refund2.total, refund2.items[0].total)
 ### Order scopes
 [Source](./examples/scopes.js)
 
+[//]: <> (Q: If it is non-canceled it must have been invoiced. Is it correct?)
+[//]: <> (A: It might be invoiced in the future, not necessarily in the past)
 Based on invoiced, refunded and canceled data, you can calculate different parts of the order:
-- invoiced and not refunded (current income)
-- not canceled and not invoiced (potential for invoices and cancellations)
-- not canceled and not refunded (potential income)
+- invoiced and non-refunded (current income)
+- non-canceled and non-invoiced (potential for invoices and cancellations)
+- non-canceled and non-refunded (potential income)
 
+[//]: <> (Q: Shouldn’t you use quantity instead of items?)
+[//]: <> (Q: You use qty in your coding so you can use quantity instead of items in the explaination!)
+[//]: <> (A: Not "instead of". Items and qty are different terms - show on website)
+
+[//]: <> (General comment: "amount" vs "prices")
 You can calculate these values for the total amount, for items and for shipping.
-Let's take the order of 4 items with 2 items invoiced, 1 canceled and 1 refunded (from the invoiced). The shipping amount would be also partially invoiced, refunded and canceled.
+Let's take the order of 4 items with 2 items invoiced, 1 canceled and 1 refunded (from the invoiced). Shipping costs would also be partially invoiced, refunded and canceled.
 - Order total amount: 16€
 - Order shipping amount: 4€
 - Order items:
@@ -121,7 +130,7 @@ const theOrder = {
 
 The current income for this order is 4€. In the scope of this income 1 item with 4€ total. Shipping costs income is 1€:
 ```javascript
-// Invoiced and not refunded amount, items, shipping
+// Invoiced and non-refunded amount, items, shipping
 console.log(
     order.sales.total(theOrder).ir,
     order.sales.items(theOrder).ir,
@@ -131,7 +140,7 @@ console.log(
 
 Potentially we can invoice or cancel 5€. In scope of this part of the order, we have 1 item with 5€ total. Potentially invoiced or canceled shipping costs is 1€:
 ```javascript
-// Not canceled and not invoiced amount, items, shipping
+// Non-canceled and non-invoiced amount, items, shipping
 console.log(
     order.sales.total(theOrder).ci,
     order.sales.items(theOrder).ci,
@@ -139,9 +148,9 @@ console.log(
 // 5 [ { id: 'a', price: 4, total: 5, qty: 1 } ] 1
 ```
 
-Potential income (in case if we invoice the rest) would be 9€. In scope of this part of the order, we have 2 items with 9€ total. Potential shipping costs income is 2€:
+Potential income (in case we invoice the rest) would be 9€. In scope of this part of the order, we have 2 items with 9€ total. Potential shipping costs income is 2€:
 ```javascript
-// Not canceled and not refunded amount, items
+// Non-canceled and non-refunded amount, items
 console.log(
     order.sales.total(theOrder).cr,
     order.sales.items(theOrder).cr,
@@ -186,7 +195,7 @@ What is wrong with this order? The library has functions to check invariants:
 - You can't refund more than invoiced (items, shipping, amount)
 - Invoiced and canceled together shouldn't be more than we have in the order
 
-Let's see the invoiced and not refunded scope - for order amount, shipping amount, items quantity and items amount:
+Let's see the invoiced and non-refunded scope - for order amount, shipping amount, items quantity and items amount:
 ```javascript
 console.log(invariants.total(theOrder).ir)
 // -1
@@ -202,7 +211,7 @@ console.log(invariants.items.total(theOrder).ir[0].total)
 ```
 Here we can see, that we refunded 1€ more than we have invoiced. We refunded 1€ more of shipping costs than we have invoiced for shipping. We refunded 1 more item than invoiced. Finally, we refunded 1€ more for this item, than invoiced.
 
-Let's see the not canceled and not invoiced scope - for order amount, shipping amount, items quantity and items amount:
+Let's see the non-canceled and non-invoiced scope - for order amount, shipping amount, items quantity and items amount:
 ```javascript
 console.log(invariants.total(theOrder).ci)
 // -2
@@ -252,11 +261,11 @@ const discountEvery3rdItem = cart => {
 }
 ```
 
-Let's have some simple checks:
+Let's do some simple checks:
 - We order one item - no promo, the total amount is just item price
-- We order 2 items - no promo, the total amount is the sum of items prices
-- We order 3 items - cheapest item discounted. For example, items prices are 5€, 5€ and 6€ - we have total amount 12€ (5€ + 1€ + 6€)
-- We order 6 items - 2 cheapest items discounted. For example, items prices are 5€, 5€, 5€, 4€, 4€ and 4€ - we have total amount 21€ (5€ + 5€ + 5€ + 4€ + 1€ + 1€)
+- We order 2 items - no promo, the total amount is the sum of item prices
+- We order 3 items - cheapest item discounted. i.e. item prices are 5€, 5€ and 6€ - we have total amount 12€ (5€ + 1€ + 6€)
+- We order 6 items - 2 cheapest items discounted. i.e. item prices are 5€, 5€, 5€, 4€, 4€ and 4€ - we have total amount 21€ (5€ + 5€ + 5€ + 4€ + 1€ + 1€)
 ```javascript
 // 1 item - no promo
 console.log(discountEvery3rdItem({

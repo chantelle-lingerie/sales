@@ -19,21 +19,21 @@ const theOrder = {
         shipping: 1,
         total: 3 }] }
 
-// Invoiced and not refunded amount, items, shipping
+// Invoiced and non-refunded amount, items, shipping
 console.log(
     order.sales.total(theOrder).ir,
     order.sales.items(theOrder).ir,
     order.sales.shipping(theOrder).ir)
 // 4 [ { id: 'a', price: 4, total: 4, qty: 1 } ] 1
 
-// Not canceled and not invoiced amount, items, shipping
+// Non-canceled and non-invoiced amount, items, shipping
 console.log(
     order.sales.total(theOrder).ci,
     order.sales.items(theOrder).ci,
     order.sales.shipping(theOrder).ci)
 // 5 [ { id: 'a', price: 4, total: 5, qty: 1 } ] 1
 
-// Not canceled and not refunded amount, items
+// Not canceled and non-refunded amount, items
 console.log(
     order.sales.total(theOrder).cr,
     order.sales.items(theOrder).cr,
